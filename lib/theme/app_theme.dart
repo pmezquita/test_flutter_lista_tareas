@@ -24,6 +24,11 @@ class AppTheme {
         secondaryHeaderColor: secondary40,
         textTheme: GoogleFonts.poppinsTextTheme(),
         primaryTextTheme: const TextTheme().copyWith(
+          titleMedium: const TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.w500,
+            fontSize: 24.0,
+          ),
           headlineLarge: const TextStyle(
             color: primary40,
             fontWeight: FontWeight.w600,
@@ -39,11 +44,7 @@ class AppTheme {
             fontSize: 12.0,
             fontWeight: FontWeight.w600,
           ),
-          bodyMedium: const TextStyle(
-            color: primary20,
-            fontSize: 14.0,
-            fontWeight: FontWeight.w400
-          ),
+          bodyMedium: const TextStyle(color: primary20, fontSize: 14.0, fontWeight: FontWeight.w400),
           displayMedium: const TextStyle(
             color: primary60,
             fontSize: 12.0,
