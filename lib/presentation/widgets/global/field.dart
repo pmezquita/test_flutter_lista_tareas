@@ -7,8 +7,10 @@ class Field extends StatelessWidget {
   final String hint;
   final TextInputType? textInputType;
   final IconData? icon;
+  final bool? obscureText;
 
-  const Field({Key? key, required this.textValue, required this.hint, this.icon, this.textInputType}) : super(key: key);
+  const Field({Key? key, required this.textValue, required this.hint, this.icon, this.textInputType, this.obscureText})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +18,7 @@ class Field extends StatelessWidget {
     return Padding(
       padding: myPaddingField,
       child: TextFormField(
+        obscureText: obscureText ?? false,
         initialValue: textValue,
         keyboardType: textInputType ?? TextInputType.text,
         style: tema.bodyMedium,

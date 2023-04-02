@@ -20,7 +20,7 @@ class AppTheme {
   AppTheme();
 
   ThemeData theme() => ThemeData(
-        colorSchemeSeed: primary91,
+        colorSchemeSeed: primary40,
         secondaryHeaderColor: secondary40,
         textTheme: GoogleFonts.poppinsTextTheme(),
         primaryTextTheme: const TextTheme().copyWith(
@@ -32,6 +32,7 @@ class AppTheme {
           headlineMedium: const TextStyle(
             color: primary40,
             fontSize: 14.0,
+            fontWeight: FontWeight.w400,
           ),
           bodyLarge: const TextStyle(
             color: primary40,
@@ -41,6 +42,7 @@ class AppTheme {
           bodyMedium: const TextStyle(
             color: primary20,
             fontSize: 14.0,
+            fontWeight: FontWeight.w400
           ),
           displayMedium: const TextStyle(
             color: primary60,

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:lista_tareas/theme/app_theme.dart';
 
 class Fondo extends StatelessWidget {
-  const Fondo({Key? key}) : super(key: key);
+  final Color colorIni, colorFin;
+
+  const Fondo({Key? key, required this.colorIni, required this.colorFin}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -11,9 +12,9 @@ class Fondo extends StatelessWidget {
     final fondoModaro = Container(
       height: size.height * 0.3,
       width: double.infinity,
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
           gradient: LinearGradient(
-        colors: <Color>[primary40, primary90],
+        colors: <Color>[colorIni, colorFin],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
       )),

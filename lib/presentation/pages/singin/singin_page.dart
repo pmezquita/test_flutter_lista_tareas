@@ -6,8 +6,8 @@ import 'package:lista_tareas/presentation/widgets/global/fondo.dart';
 import 'package:lista_tareas/presentation/widgets/global/label_field.dart';
 import 'package:lista_tareas/theme/app_theme.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class SinginPage extends StatelessWidget {
+  const SinginPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,29 +19,35 @@ class LoginPage extends StatelessWidget {
           hasScrollBody: false,
           child: Column(
             children: <Widget>[
-              const Fondo(colorIni: primary40, colorFin: primary90),
+              const Fondo(colorIni: secondary20, colorFin: secondary90),
               const SizedBox(height: 40.0),
               Text(
-                'Iniciar Sesión',
+                'Crear una Cuenta',
                 style: tema.headlineLarge,
               ),
               const LabelField(label: 'Nombre de Usuario'),
               const Field(
                 textValue: '',
-                hint: 'Coloca tu nombre de Usuario',
+                hint: 'Escoge un nombre de Usuario',
                 icon: Icons.person_outline,
               ),
-              const SizedBox(height: 20),
-              const LabelField(label: 'Contraseña'),
+              const LabelField(label: 'Escoge una contraseña'),
               const Field(
                 textValue: '',
-                hint: 'Escribe tu contraseña',
+                hint: 'Contraseña mayor a 8 dígitos',
                 icon: Icons.lock_outline,
                 obscureText: true,
               ),
-              const LabelLink(label1: '¿No tienes una cuenta?', label2: 'Crear una nueva'),
+              const LabelField(label: 'Confirma tu contraseña'),
+              const Field(
+                textValue: '',
+                hint: 'Verifica tu contraseña',
+                icon: Icons.lock_outline,
+                obscureText: true,
+              ),
+              const LabelLink(label1: '¿Ya tienes una contraseña?', label2: 'Ingresar con tu cuenta'),
               const Expanded(child: SizedBox.shrink()),
-              const ButtonPrincipal(text: 'Continuar'),
+              const ButtonPrincipal(text: 'Continuar', isPrimary: false),
             ],
           ),
         ),
