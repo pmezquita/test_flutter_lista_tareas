@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:lista_tareas/presentation/widgets/login/button_principal.dart';
-import 'package:lista_tareas/presentation/widgets/login/crear_cuenta_label.dart';
-import 'package:lista_tareas/presentation/widgets/login/field.dart';
-import 'package:lista_tareas/presentation/widgets/login/fondo.dart';
-import 'package:lista_tareas/presentation/widgets/login/text_label.dart';
+import 'package:lista_tareas/presentation/widgets/global/button_principal.dart';
+import 'package:lista_tareas/presentation/widgets/global/label_link.dart';
+import 'package:lista_tareas/presentation/widgets/global/field.dart';
+import 'package:lista_tareas/presentation/widgets/global/fondo.dart';
+import 'package:lista_tareas/presentation/widgets/global/label_field.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -24,20 +24,20 @@ class LoginPage extends StatelessWidget {
                 'Iniciar Sesión',
                 style: tema.headlineLarge,
               ),
-              const TextLabel(label: 'Nombre de Usuario'),
+              const LabelField(label: 'Nombre de Usuario'),
               const Field(
                 textValue: '',
                 hint: 'Coloca tu nombre de Usuario',
                 icon: Icons.person_outline,
               ),
               const SizedBox(height: 20),
-              const TextLabel(label: 'Contraseña'),
+              const LabelField(label: 'Contraseña'),
               const Field(
                 textValue: '',
                 hint: 'Escribe tu contraseña',
                 icon: Icons.lock_outline,
               ),
-              const CrearCuentaLabel(),
+              const LabelLink(label1: '¿No tienes una cuenta?', label2: 'Crear una nueva'),
               const Expanded(child: SizedBox.shrink()),
               const ButtonPrincipal(text: 'Continuar'),
             ],

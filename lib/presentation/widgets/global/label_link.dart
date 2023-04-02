@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 
 import '../../../theme/app_theme.dart';
 
-class CrearCuentaLabel extends StatelessWidget {
-  const CrearCuentaLabel({Key? key}) : super(key: key);
+class LabelLink extends StatelessWidget {
+  final String label1;
+  final String label2;
+  const LabelLink({Key? key, required this.label1, required this.label2}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +15,7 @@ class CrearCuentaLabel extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            '¿No tienes una cuenta?',
+            label1,
             style: tema.headlineMedium,
           ),
           Padding(
@@ -26,7 +28,7 @@ class CrearCuentaLabel extends StatelessWidget {
                   style: tema.headlineMedium,
                 ),
                 Text(
-                  'Crear una nueva',
+                  label2,
                   style: tema.headlineMedium?.copyWith(fontWeight: FontWeight.bold),
                 ),
               ],
