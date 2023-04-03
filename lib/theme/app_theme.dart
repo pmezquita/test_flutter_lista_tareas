@@ -15,7 +15,7 @@ const Color secondary90 = Color(0xffFFF1E4);
 const paddingLabel = EdgeInsets.only(left: 13.0, right: 13.0, top: 20, bottom: 14);
 const myPaddingField = EdgeInsets.symmetric(horizontal: 13.0);
 const myPaddingButton = EdgeInsets.only(left: 13.0, right: 13.0, top: 20, bottom: 30);
-const myPaddingCard = EdgeInsets.only(left: 16.0, right: 16.0, top: 10, bottom: 10);
+const myPaddingCard = EdgeInsets.only(left: 16.0, right: 16.0, top: 10);
 
 class AppTheme {
   AppTheme();
