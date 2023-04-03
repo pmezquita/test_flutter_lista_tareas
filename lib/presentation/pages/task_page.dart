@@ -24,25 +24,21 @@ class TaskPage extends StatelessWidget {
           SliverFillRemaining(
             hasScrollBody: false,
             child: Column(
-              children: const <Widget>[
-                SizedBox(height: 40.0),
-                LabelField(label: 'Título'),
-                Field(
+              children: <Widget>[
+                const SizedBox(height: 40.0),
+                const LabelField(label: 'Título'),
+                const Field(
                   textValue: '',
                   hint: 'Escribe aquí el título de tu tarea',
                 ),
-                LabelField(label: 'Descripción'),
-                Field(
+                const LabelField(label: 'Descripción'),
+                const Field(
                   textValue: '',
                   hint: 'Describe cómo será tu tarea',
                   keyboardType: TextInputType.multiline,
                 ),
-                LabelField(label: 'Fecha'),
-                Field(
-                  textValue: '',
-                  hint: 'Día',
-                  digitsOnly: true,
-                ),
+                const LabelField(label: 'Fecha'),
+                _rowFecha(),
               ],
             ),
           ),
@@ -50,4 +46,30 @@ class TaskPage extends StatelessWidget {
       ),
     );
   }
+
+  Widget _rowFecha() => Row(
+        children: const [
+          Expanded(
+            child: Field(
+              textValue: '',
+              hint: 'Día',
+              digitsOnly: true,
+            ),
+          ),
+          Expanded(
+            child: Field(
+              textValue: '',
+              hint: 'Mes',
+              digitsOnly: true,
+            ),
+          ),
+          Expanded(
+            child: Field(
+              textValue: '',
+              hint: 'Año',
+              digitsOnly: true,
+            ),
+          ),
+        ],
+      );
 }
