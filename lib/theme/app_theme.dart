@@ -15,6 +15,7 @@ const Color secondary90 = Color(0xffFFF1E4);
 const paddingLabel = EdgeInsets.only(left: 13.0, right: 13.0, top: 20, bottom: 14);
 const myPaddingField = EdgeInsets.symmetric(horizontal: 13.0);
 const myPaddingButton = EdgeInsets.only(left: 13.0, right: 13.0, top: 20, bottom: 30);
+const myPaddingCard = EdgeInsets.only(left: 16.0, right: 16.0, top: 10, bottom: 10);
 
 class AppTheme {
   AppTheme();
@@ -24,32 +25,15 @@ class AppTheme {
         secondaryHeaderColor: secondary40,
         textTheme: GoogleFonts.poppinsTextTheme(),
         primaryTextTheme: const TextTheme().copyWith(
-          titleMedium: const TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.w500,
-            fontSize: 24.0,
-          ),
-          headlineLarge: const TextStyle(
-            color: primary40,
-            fontWeight: FontWeight.w600,
-            fontSize: 25.0,
-          ),
-          headlineMedium: const TextStyle(
-            color: primary40,
-            fontSize: 14.0,
-            fontWeight: FontWeight.w400,
-          ),
-          bodyLarge: const TextStyle(
-            color: primary40,
-            fontSize: 12.0,
-            fontWeight: FontWeight.w600,
-          ),
+          titleMedium: const TextStyle(color: Colors.white, fontSize: 24.0, fontWeight: FontWeight.w500),
+          headlineLarge: const TextStyle(color: primary40, fontSize: 25.0, fontWeight: FontWeight.w600),
+          headlineMedium: const TextStyle(color: primary40, fontSize: 14.0, fontWeight: FontWeight.w400),
+          bodyLarge: const TextStyle(color: primary40, fontSize: 12.0, fontWeight: FontWeight.w600),
           bodyMedium: const TextStyle(color: primary20, fontSize: 14.0, fontWeight: FontWeight.w400),
-          displayMedium: const TextStyle(
-            color: primary60,
-            fontSize: 12.0,
-            fontWeight: FontWeight.w400,
-          ),
+          displayMedium: const TextStyle(color: primary60, fontSize: 12.0, fontWeight: FontWeight.w400),
+          labelLarge: const TextStyle(color: primary20, fontSize: 18.0, fontWeight: FontWeight.w700),
+          labelMedium: const TextStyle(color: primary20, fontSize: 15.0, fontWeight: FontWeight.w400),
+          labelSmall: const TextStyle(color: primary20, fontSize: 14.0, fontWeight: FontWeight.w700),
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
