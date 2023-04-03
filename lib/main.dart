@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lista_tareas/helpers/constants.dart';
-import 'package:lista_tareas/presentation/pages/home_page.dart';
-import 'package:lista_tareas/presentation/pages/login_page.dart';
-import 'package:lista_tareas/presentation/pages/singin_page.dart';
-import 'package:lista_tareas/presentation/pages/task_page.dart';
+import 'package:lista_tareas/router/my_go_router.dart';
 import 'package:lista_tareas/theme/app_theme.dart';
 
 import 'models/task_model.dart';
@@ -18,14 +15,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tarea = Task.foo();
-    return MaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: appName,
       theme: AppTheme().theme(),
-      // home: LoginPage(),
-      // home: SinginPage(),
-      // home: HomePage(),
-      home: TaskPage(tarea: tarea),
+      routerConfig: myGoRouter,
     );
   }
 }
