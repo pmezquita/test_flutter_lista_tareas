@@ -4,6 +4,7 @@ import 'package:lista_tareas/presentation/widgets/global/label_link.dart';
 import 'package:lista_tareas/presentation/widgets/global/field.dart';
 import 'package:lista_tareas/presentation/widgets/global/fondo.dart';
 import 'package:lista_tareas/presentation/widgets/global/label_field.dart';
+import 'package:lista_tareas/presentation/widgets/login/button_login_singin.dart';
 import 'package:lista_tareas/theme/app_theme.dart';
 
 class LoginPage extends StatelessWidget {
@@ -41,7 +42,7 @@ class LoginPage extends StatelessWidget {
               ),
               const LabelLink(label1: '¿No tienes una cuenta?', label2: 'Crear una nueva'),
               const Expanded(child: SizedBox.shrink()),
-              const ButtonPrincipal(text: 'Continuar'),
+              const ButtonLoginSingin(text: 'Continuar'),
             ],
           ),
         ),

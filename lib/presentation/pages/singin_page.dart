@@ -4,6 +4,7 @@ import 'package:lista_tareas/presentation/widgets/global/label_link.dart';
 import 'package:lista_tareas/presentation/widgets/global/field.dart';
 import 'package:lista_tareas/presentation/widgets/global/fondo.dart';
 import 'package:lista_tareas/presentation/widgets/global/label_field.dart';
+import 'package:lista_tareas/presentation/widgets/login/button_login_singin.dart';
 import 'package:lista_tareas/theme/app_theme.dart';
 
 class SinginPage extends StatelessWidget {
@@ -47,7 +48,7 @@ class SinginPage extends StatelessWidget {
               ),
               const LabelLink(label1: '¿Ya tienes una contraseña?', label2: 'Ingresar con tu cuenta'),
               const Expanded(child: SizedBox.shrink()),
-              const ButtonPrincipal(text: 'Continuar', isPrimary: false),
+              const ButtonLoginSingin(text: 'Continuar', isPrimary: false),
             ],
           ),
         ),

@@ -14,7 +14,9 @@ const Color secondary90 = Color(0xffFFF1E4);
 
 const paddingLabel = EdgeInsets.only(left: 13.0, right: 13.0, top: 20, bottom: 14);
 const myPaddingField = EdgeInsets.symmetric(horizontal: 13.0);
-const myPaddingButton = EdgeInsets.only(left: 13.0, right: 13.0, top: 20, bottom: 30);
+const marginBtnLogin = EdgeInsets.only(left: 25.0, right: 25.0, bottom: 25.0, top: 10.0);
+const marginBtnFormPrincipal = EdgeInsets.only(left: 16.0, right: 16.0, top: 25.0, bottom: 25.0);
+const marginBtnFormSecundario = EdgeInsets.only(left: 16.0, right: 16.0, top: 25.0);
 const myPaddingCard = EdgeInsets.only(left: 16.0, right: 16.0, top: 10);
 
 class AppTheme {
@@ -23,8 +25,8 @@ class AppTheme {
   ThemeData theme() => ThemeData(
         colorSchemeSeed: primary40,
         secondaryHeaderColor: secondary40,
-        textTheme: GoogleFonts.poppinsTextTheme(),
-        primaryTextTheme: const TextTheme().copyWith(
+        fontFamily: GoogleFonts.poppins().fontFamily,
+        primaryTextTheme: GoogleFonts.poppinsTextTheme().copyWith(
           titleMedium: const TextStyle(color: Colors.white, fontSize: 24.0, fontWeight: FontWeight.w500),
           headlineLarge: const TextStyle(color: primary40, fontSize: 25.0, fontWeight: FontWeight.w600),
           headlineMedium: const TextStyle(color: primary40, fontSize: 14.0, fontWeight: FontWeight.w400),

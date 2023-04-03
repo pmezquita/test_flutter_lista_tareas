@@ -55,6 +55,9 @@ class _ButtonAlert extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textStyle = isPrimary
+        ? Theme.of(context).primaryTextTheme.displaySmall?.copyWith(color: Colors.white)
+        : Theme.of(context).primaryTextTheme.displaySmall;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: ElevatedButton(
@@ -62,12 +65,12 @@ class _ButtonAlert extends StatelessWidget {
         style: isPrimary
             ? Theme.of(context).elevatedButtonTheme.style
             : ElevatedButton.styleFrom(
-                textStyle: Theme.of(context).primaryTextTheme.displaySmall,
+                textStyle: textStyle,
                 foregroundColor: secondary40,
                 backgroundColor: secondary90,
                 side: const BorderSide(color: secondary40),
               ),
-        child: Text(text),
+        child: Text(text, style: textStyle),
       ),
     );
   }
