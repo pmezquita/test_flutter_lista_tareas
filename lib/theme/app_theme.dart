@@ -34,15 +34,18 @@ class AppTheme {
           labelLarge: const TextStyle(color: primary20, fontSize: 18.0, fontWeight: FontWeight.w700),
           labelMedium: const TextStyle(color: primary20, fontSize: 15.0, fontWeight: FontWeight.w400),
           labelSmall: const TextStyle(color: primary20, fontSize: 14.0, fontWeight: FontWeight.w700),
+          displaySmall: const TextStyle(color: secondary40, fontSize: 15.0, fontWeight: FontWeight.w600),
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
+              elevation: 0.0,
               shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(12.0))),
               backgroundColor: primary40,
               foregroundColor: Colors.white,
               textStyle: const TextStyle(
                 color: Colors.white,
                 fontSize: 15.0,
+                fontWeight: FontWeight.w600,
               )),
         ),
       );
