@@ -1,6 +1,5 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
+import 'package:lista_tareas/presentation/widgets/task/avatar_task.dart';
 import 'package:lista_tareas/theme/app_theme.dart';
 
 import '../../../models/task_model.dart';
@@ -22,11 +21,7 @@ class CardTask extends StatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
-                  child: CircleAvatar(
-                    radius: 30,
-                    backgroundColor: primary90,
-                    backgroundImage: MemoryImage(base64Decode(tarea.imgB64)),
-                  ),
+                  child: AvatarTask(imgB64: tarea.imgB64, radius: 30),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 10.0),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lista_tareas/presentation/widgets/task/avatar_task.dart';
 
 import '../../models/task_model.dart';
 import '../widgets/global/appbar.dart';
@@ -26,6 +27,12 @@ class TaskPage extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 const SizedBox(height: 40.0),
+                AvatarTask(imgB64: '', radius: 70),
+                const SizedBox(height: 10.0),
+                Text(
+                  'Click para abrir galería',
+                  style: Theme.of(context).primaryTextTheme.headlineMedium?.copyWith(fontSize: 12),
+                ),
                 const LabelField(label: 'Título'),
                 const Field(
                   textValue: '',
