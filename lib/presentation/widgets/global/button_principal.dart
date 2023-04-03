@@ -3,9 +3,13 @@ import 'package:lista_tareas/theme/app_theme.dart';
 
 class ButtonPrincipal extends StatelessWidget {
   final String text;
-  final bool? isPrimary;
+  final bool isPrimary;
 
-  const ButtonPrincipal({Key? key, required this.text, this.isPrimary}) : super(key: key);
+  const ButtonPrincipal({
+    Key? key,
+    required this.text,
+    this.isPrimary = true,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +17,7 @@ class ButtonPrincipal extends StatelessWidget {
       width: double.infinity,
       height: 100.0,
       padding: myPaddingButton,
-      child: _MyButton(text: text, isPrimary: isPrimary ?? true),
+      child: _MyButton(text: text, isPrimary: isPrimary),
     );
   }
 }

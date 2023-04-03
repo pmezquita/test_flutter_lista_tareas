@@ -1,16 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../../theme/app_theme.dart';
 
 class Field extends StatelessWidget {
   final String textValue;
   final String hint;
-  final TextInputType? textInputType;
+  final TextInputType keyboardType;
   final IconData? icon;
-  final bool? obscureText;
+  final bool obscureText;
+  final bool digitsOnly;
 
-  const Field({Key? key, required this.textValue, required this.hint, this.icon, this.textInputType, this.obscureText})
-      : super(key: key);
+  const Field({
+    Key? key,
+    required this.textValue,
+    required this.hint,
+    this.icon,
+    this.keyboardType = TextInputType.text,
+    this.obscureText = false,
+    this.digitsOnly = false,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,9 +27,11 @@ class Field extends StatelessWidget {
     return Padding(
       padding: myPaddingField,
       child: TextFormField(
-        obscureText: obscureText ?? false,
+        obscureText: obscureText,
         initialValue: textValue,
-        keyboardType: textInputType ?? TextInputType.text,
+        keyboardType: digitsOnly ? TextInputType.number : keyboardType,
+        maxLines: (keyboardType == TextInputType.multiline) ? 6 : 1,
+        inputFormatters: digitsOnly ? [FilteringTextInputFormatter.digitsOnly] : [],
         style: tema.bodyMedium,
         decoration: _myDecoration(
           hint: hint,
@@ -40,10 +51,9 @@ class Field extends StatelessWidget {
   InputDecoration _myDecoration({
     required BuildContext context,
     IconData? icon,
-    bool? blanco,
+    bool blanco = false,
     String? hint,
   }) {
-    blanco ??= false;
     final tema = Theme.of(context);
 
     return InputDecoration(

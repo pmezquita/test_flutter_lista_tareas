@@ -3,15 +3,20 @@ import 'package:lista_tareas/theme/app_theme.dart';
 
 class MyAppBar extends StatelessWidget with PreferredSizeWidget {
   final String title;
-  final bool? showBack;
+  final bool showBack;
   final VoidCallback? onPressedBack;
 
-  const MyAppBar({Key? key, required this.title, this.showBack, this.onPressedBack}) : super(key: key);
+  const MyAppBar({
+    Key? key,
+    required this.title,
+    this.showBack = false,
+    this.onPressedBack,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      leading: (showBack ?? false)
+      leading: (showBack)
           ? IconButton(
               icon: const Icon(Icons.arrow_back_ios),
               onPressed: onPressedBack ?? () {},

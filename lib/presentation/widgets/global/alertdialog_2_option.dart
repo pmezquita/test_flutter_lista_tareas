@@ -43,10 +43,15 @@ class AlertDialog2Opt extends StatelessWidget {
 
 class _ButtonAlert extends StatelessWidget {
   final String text;
-  final bool? isPrimary;
+  final bool isPrimary;
   final VoidCallback? onPressed;
 
-  const _ButtonAlert({Key? key, required this.text, this.isPrimary, this.onPressed}) : super(key: key);
+  const _ButtonAlert({
+    Key? key,
+    required this.text,
+    this.isPrimary = true,
+    this.onPressed,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +59,7 @@ class _ButtonAlert extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: ElevatedButton(
         onPressed: onPressed,
-        style: isPrimary ?? true
+        style: isPrimary
             ? Theme.of(context).elevatedButtonTheme.style
             : ElevatedButton.styleFrom(
                 textStyle: Theme.of(context).primaryTextTheme.displaySmall,
