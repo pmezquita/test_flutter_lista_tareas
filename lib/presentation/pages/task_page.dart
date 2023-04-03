@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../models/task_model.dart';
 import '../widgets/global/appbar.dart';
+import '../widgets/global/button_principal.dart';
 import '../widgets/global/field.dart';
 import '../widgets/global/label_field.dart';
 
@@ -12,7 +13,6 @@ class TaskPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tema = Theme.of(context).primaryTextTheme;
     return Scaffold(
       appBar: MyAppBar(
         title: 'New Task',
@@ -39,6 +39,12 @@ class TaskPage extends StatelessWidget {
                 ),
                 const LabelField(label: 'Fecha'),
                 _rowFecha(),
+                const Expanded(child: SizedBox.shrink()),
+                ButtonPrincipal(
+                  text: 'Crear',
+                  icon: Icons.check,
+                  onPressed: () => Navigator.pop(context),
+                ),
               ],
             ),
           ),
