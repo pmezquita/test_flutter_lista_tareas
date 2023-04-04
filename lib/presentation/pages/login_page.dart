@@ -5,7 +5,6 @@ import 'package:lista_tareas/presentation/widgets/global/field.dart';
 import 'package:lista_tareas/presentation/widgets/global/fondo.dart';
 import 'package:lista_tareas/presentation/widgets/global/label_field.dart';
 import 'package:lista_tareas/presentation/widgets/login/button_login_singin.dart';
-import 'package:lista_tareas/theme/app_theme.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -20,7 +19,7 @@ class LoginPage extends StatelessWidget {
           hasScrollBody: false,
           child: Column(
             children: <Widget>[
-              const Fondo(color1: primary20, color2: primary40, color3: primary60, maxHeight: 200),
+              const Fondo.primary(),
               const SizedBox(height: 40.0),
               Text(
                 'Iniciar Sesión',

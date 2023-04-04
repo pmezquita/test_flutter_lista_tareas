@@ -5,7 +5,6 @@ import 'package:lista_tareas/presentation/widgets/global/field.dart';
 import 'package:lista_tareas/presentation/widgets/global/fondo.dart';
 import 'package:lista_tareas/presentation/widgets/global/label_field.dart';
 import 'package:lista_tareas/presentation/widgets/login/button_login_singin.dart';
-import 'package:lista_tareas/theme/app_theme.dart';
 
 class SinginPage extends StatelessWidget {
   const SinginPage({Key? key}) : super(key: key);
@@ -20,7 +19,7 @@ class SinginPage extends StatelessWidget {
           hasScrollBody: false,
           child: Column(
             children: <Widget>[
-              const Fondo(color1: secondary20, color2: secondary40, color3: secondary60, maxHeight: 200),
+              const Fondo.secondary(),
               const SizedBox(height: 40.0),
               Text(
                 'Crear una Cuenta',

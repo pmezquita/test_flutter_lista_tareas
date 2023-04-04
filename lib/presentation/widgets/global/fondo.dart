@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:lista_tareas/presentation/widgets/global/wave_clipper.dart';
+import 'package:lista_tareas/theme/app_theme.dart';
 
 class Fondo extends StatelessWidget {
   final Color color1, color2, color3;
   final double maxHeight;
 
-  const Fondo({Key? key, required this.color1, required this.color2, required this.color3, required this.maxHeight}) : super(key: key);
+  const Fondo._base(
+      {Key? key, required this.color1, required this.color2, required this.color3, required this.maxHeight})
+      : super(key: key);
 
+  const Fondo.primary({Key? key})
+      : this._base(color1: primary20, color2: primary40, color3: primary60, maxHeight: 200, key: key);
+
+  const Fondo.secondary({Key? key})
+      : this._base(color1: secondary20, color2: secondary40, color3: secondary60, maxHeight: 200, key: key);
 
   @override
   Widget build(BuildContext context) {
