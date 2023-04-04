@@ -45,7 +45,7 @@ class SinginPage extends StatelessWidget {
                     prefixIcon: Icons.lock_outline,
                     suffixIcon: state.obscurePassword1 ? Icons.visibility_outlined : Icons.visibility_off_outlined,
                     obscureText: state.obscurePassword1,
-                    onPressedSuffixIcon: () => userBloc.add(TogglePassword1()),
+                    onPressedSuffixIcon: () => userBloc.add(TogglePassword1Event()),
                   );
                 },
               ),
@@ -58,7 +58,7 @@ class SinginPage extends StatelessWidget {
                     prefixIcon: Icons.lock_outline,
                     suffixIcon: state.obscurePassword2 ? Icons.visibility_outlined : Icons.visibility_off_outlined,
                     obscureText: state.obscurePassword2,
-                    onPressedSuffixIcon: () => userBloc.add(TogglePassword2()),
+                    onPressedSuffixIcon: () => userBloc.add(TogglePassword2Event()),
                   );
                 },
               ),

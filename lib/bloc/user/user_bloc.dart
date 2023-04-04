@@ -8,13 +8,16 @@ part 'user_state.dart';
 
 class UserBloc extends Bloc<UserEvent, UserState> {
   UserBloc() : super(const UserInitialState()) {
-    on<SetUserEvent>((event, emit) {
-      // TODO: implement event handler
+    on<SetInitialUserEvent>((event, emit) {
+      emit(const UserInitialState());
     });
-    on<TogglePassword1>((event, emit) {
+    on<SetUserEvent>((event, emit) {
+      emit(UserSetState(true, true, event.user));
+    });
+    on<TogglePassword1Event>((event, emit) {
       emit(UserSetState(!state.obscurePassword1, state.obscurePassword2, state.user));
     });
-    on<TogglePassword2>((event, emit) {
+    on<TogglePassword2Event>((event, emit) {
       emit(UserSetState(state.obscurePassword1, !state.obscurePassword2, state.user));
     });
   }

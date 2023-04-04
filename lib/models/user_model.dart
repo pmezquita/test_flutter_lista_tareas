@@ -7,7 +7,7 @@ class UserModel {
 
   UserModel();
 
-  UserModel.full({required this.id, required this.username, required this.password});
+  UserModel.full({this.id, required this.username, required this.password});
 
   UserModel.fromMap(Map<String, dynamic> map) {
     id = map[columnId];

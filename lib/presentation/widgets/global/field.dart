@@ -13,6 +13,8 @@ class Field extends StatelessWidget {
   final bool obscureText;
   final bool digitsOnly;
   final bool enabled;
+  final String? Function(String?)? validator;
+  final void Function(String?)? onSaved;
 
   const Field({
     Key? key,
@@ -25,6 +27,8 @@ class Field extends StatelessWidget {
     this.obscureText = false,
     this.digitsOnly = false,
     this.enabled = true,
+    this.validator,
+    this.onSaved,
   }) : super(key: key);
 
   @override
@@ -55,10 +59,13 @@ class Field extends StatelessWidget {
               : null,
         ),
         validator: (value) {
-          return null;
+          if (validator == null) return null;
+
+          return validator!(value);
         },
-        onSaved: (valor) => () {},
-        //onFieldSubmitted: (valor) => FocusScope.of(context).requestFocus(_focusNodeContrasena),
+        onSaved: (valor) {
+          if (onSaved != null) onSaved!(valor);
+        },
       ),
     );
   }
