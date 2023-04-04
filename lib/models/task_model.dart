@@ -1,8 +1,9 @@
 import 'package:intl/intl.dart';
+import 'package:lista_tareas/db/task_db.dart';
 import 'package:lista_tareas/helpers/constants.dart';
 
 class Task {
-  int id = 0;
+  int? id;
   String imgB64 = '';
   String? titulo;
   String? descripcion;
@@ -14,12 +15,11 @@ class Task {
 
   Task();
 
-  Task.min({required this.titulo, required this.descripcion, required this.fecha})
-      : id = 1,
-        dia = fecha!.day,
-        mes = fecha.month,
-        anio = fecha.year,
-        imgB64 = fooImg;
+  Task.min({required this.titulo, required this.descripcion, required this.fecha}) {
+    id = 1;
+    setFechaFullDate = fecha!;
+    imgB64 = fooImg;
+  }
 
   Task.foo()
       : this.min(
@@ -30,5 +30,45 @@ class Task {
 
   String get formatDate => fecha == null ? '- - -' : DateFormat('dd/MM/yy').format(fecha!);
 
-  bool get isNew => id == 0;
+  set setFechaFullStr(String fecha) {
+    final date = DateTime.parse(fecha);
+    this.fecha = date;
+    dia = date.day;
+    mes = date.month;
+    anio = date.year;
+  }
+
+  set setFechaFullDate(DateTime date) {
+    fecha = date;
+    dia = date.day;
+    mes = date.month;
+    anio = date.year;
+  }
+
+  bool get isNew => id == null;
+
+  Task.fromMap(Map<String, dynamic> map) {
+    id = map[columnId];
+    titulo = map[columnTitulo];
+    descripcion = map[columnDescripcion];
+    setFechaFullStr = map[columnFecha];
+    completada = map[columnCompletada];
+  }
+
+  static List<Task> fromListMap(List<Map<String, dynamic>> maps) {
+    return maps.map((e) => Task.fromMap(e)).toList();
+  }
+
+  Map<String, dynamic> toMap() {
+    Map<String, dynamic> map = <String, dynamic>{
+      columnTitulo: titulo,
+      columnDescripcion: descripcion,
+      columnFecha: fecha,
+      columnCompletada: completada,
+    };
+    if (id != null) {
+      map[columnId] = id;
+    }
+    return map;
+  }
 }
