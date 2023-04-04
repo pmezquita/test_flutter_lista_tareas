@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lista_tareas/theme/app_theme.dart';
 
 class Fab extends StatelessWidget {
   final VoidCallback? onPressed;
@@ -14,7 +13,6 @@ class Fab extends StatelessWidget {
       child: FittedBox(
         child: FloatingActionButton(
           onPressed: onPressed,
-          backgroundColor: secondary40,
           child: const Icon(Icons.add, size: 50.0),
         ),
       ),

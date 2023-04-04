@@ -24,9 +24,8 @@ class AppTheme {
 
   ThemeData theme() => ThemeData(
       colorSchemeSeed: primary40,
-      secondaryHeaderColor: secondary40,
       fontFamily: GoogleFonts.poppins().fontFamily,
-      primaryTextTheme: GoogleFonts.poppinsTextTheme().copyWith(
+      textTheme: GoogleFonts.poppinsTextTheme().copyWith(
         titleMedium: const TextStyle(color: Colors.white, fontSize: 24.0, fontWeight: FontWeight.w500),
         headlineLarge: const TextStyle(color: primary40, fontSize: 25.0, fontWeight: FontWeight.w600),
         headlineMedium: const TextStyle(color: primary40, fontSize: 14.0, fontWeight: FontWeight.w400),
@@ -37,6 +36,24 @@ class AppTheme {
         labelMedium: const TextStyle(color: primary20, fontSize: 15.0, fontWeight: FontWeight.w400),
         labelSmall: const TextStyle(color: primary20, fontSize: 14.0, fontWeight: FontWeight.w700),
         displaySmall: const TextStyle(color: secondary40, fontSize: 15.0, fontWeight: FontWeight.w600),
+      ),
+      appBarTheme: const AppBarTheme(
+        centerTitle: true,
+        backgroundColor: primary40,
+      ),
+      cardTheme: const CardTheme(
+        color: primary90,
+      ),
+      floatingActionButtonTheme: const FloatingActionButtonThemeData(
+        backgroundColor: secondary40,
+      ),
+      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        backgroundColor: primary90,
+        selectedItemColor: primary20,
+        unselectedItemColor: primary20,
+        type: BottomNavigationBarType.fixed,
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(

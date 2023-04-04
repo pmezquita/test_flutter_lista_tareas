@@ -14,7 +14,7 @@ class LabelField extends StatelessWidget {
       padding: paddingLabel,
       child: Text(
         label,
-        style: Theme.of(context).primaryTextTheme.bodyLarge,
+        style: Theme.of(context).textTheme.bodyLarge,
       ),
     );
   }

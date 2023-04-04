@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lista_tareas/theme/app_theme.dart';
 
 class MyAppBar extends StatelessWidget with PreferredSizeWidget {
   final String title;
@@ -22,11 +21,9 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget {
               onPressed: onPressedBack ?? () {},
             )
           : const SizedBox.shrink(),
-      centerTitle: true,
-      backgroundColor: primary40,
       title: Text(
         title,
-        style: Theme.of(context).primaryTextTheme.titleMedium,
+        style: Theme.of(context).textTheme.titleMedium,
       ),
     );
   }

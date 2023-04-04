@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lista_tareas/theme/app_theme.dart';
 
 class BottomNavbar extends StatelessWidget {
   final int selectedIndex;
@@ -12,13 +11,7 @@ class BottomNavbar extends StatelessWidget {
     const sizeIcon = 30.0;
     return BottomNavigationBar(
       currentIndex: selectedIndex,
-      showSelectedLabels: false,
-      showUnselectedLabels: false,
-      backgroundColor: primary90,
-      selectedItemColor: primary20,
-      unselectedItemColor: primary20,
       onTap: onTap,
-      type: BottomNavigationBarType.fixed,
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           label: '',

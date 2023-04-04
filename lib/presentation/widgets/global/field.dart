@@ -25,7 +25,7 @@ class Field extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tema = Theme.of(context).primaryTextTheme;
+    final tema = Theme.of(context).textTheme;
     return Padding(
       padding: myPaddingField,
       child: TextFormField(
@@ -36,33 +36,19 @@ class Field extends StatelessWidget {
         maxLines: (keyboardType == TextInputType.multiline) ? 6 : 1,
         inputFormatters: digitsOnly ? [FilteringTextInputFormatter.digitsOnly] : [],
         style: tema.bodyMedium,
-        decoration: _myDecoration(
-          hint: hint,
-          context: context,
-          icon: icon,
-          enabled: enabled,
+        decoration: InputDecoration(
+          filled: !enabled,
+          fillColor: enabled ? null : primary90,
+          hintText: hint,
+          prefixIcon:
+              icon != null ? Padding(padding: const EdgeInsets.all(12.0), child: Icon(icon, color: primary40)) : null,
         ),
         validator: (value) {
           return null;
         },
-        onSaved: (valor) => () {}, // TODO: implementar
+        onSaved: (valor) => () {},
         //onFieldSubmitted: (valor) => FocusScope.of(context).requestFocus(_focusNodeContrasena),
       ),
-    );
-  }
-
-  InputDecoration _myDecoration({
-    required BuildContext context,
-    IconData? icon,
-    String? hint,
-    required bool enabled,
-  }) {
-    return InputDecoration(
-      filled: !enabled,
-      fillColor: enabled ? null : primary90,
-      hintText: hint,
-      prefixIcon:
-          icon != null ? Padding(padding: const EdgeInsets.all(12.0), child: Icon(icon, color: primary40)) : null,
     );
   }
 }

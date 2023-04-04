@@ -13,12 +13,11 @@ class CardTask extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tema = Theme.of(context).primaryTextTheme;
+    final tema = Theme.of(context).textTheme;
     return Padding(
       padding: myPaddingCard,
       child: GestureDetector(
         child: Card(
-          color: primary90,
           child: ListTile(
               title: Row(
                 children: [

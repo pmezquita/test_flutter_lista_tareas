@@ -11,12 +11,12 @@ class ButtonUpdate extends StatelessWidget {
     return ElevatedButton.icon(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        textStyle: Theme.of(context).primaryTextTheme.displaySmall,
+        textStyle: Theme.of(context).textTheme.displaySmall,
         foregroundColor: secondary40,
         backgroundColor: secondary90,
         side: const BorderSide(color: secondary40),
       ),
-      label: Text(text, style: Theme.of(context).primaryTextTheme.displaySmall),
+      label: Text(text, style: Theme.of(context).textTheme.displaySmall),
       icon: const Icon(Icons.edit_outlined),
     );
   }

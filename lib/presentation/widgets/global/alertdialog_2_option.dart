@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lista_tareas/presentation/widgets/global/button_principal.dart';
 
 import '../../../theme/app_theme.dart';
 
@@ -23,7 +22,7 @@ class AlertDialog2Opt extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tema = Theme.of(context).primaryTextTheme;
+    final tema = Theme.of(context).textTheme;
     return AlertDialog(
       backgroundColor: primary90,
       title: Text(title, style: tema.bodyMedium, textAlign: TextAlign.center),
@@ -56,8 +55,8 @@ class _ButtonAlert extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textStyle = isPrimary
-        ? Theme.of(context).primaryTextTheme.displaySmall?.copyWith(color: Colors.white)
-        : Theme.of(context).primaryTextTheme.displaySmall;
+        ? Theme.of(context).textTheme.displaySmall?.copyWith(color: Colors.white)
+        : Theme.of(context).textTheme.displaySmall;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: ElevatedButton(

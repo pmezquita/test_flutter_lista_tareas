@@ -22,7 +22,7 @@ class ButtonPrincipal extends StatelessWidget {
       style: isPrimary
           ? Theme.of(context).elevatedButtonTheme.style
           : ElevatedButton.styleFrom(backgroundColor: secondary40),
-      label: Text(text, style: Theme.of(context).primaryTextTheme.displaySmall?.copyWith(color: Colors.white)),
+      label: Text(text, style: Theme.of(context).textTheme.displaySmall?.copyWith(color: Colors.white)),
       icon: (icon != null) ? Icon(icon) : const SizedBox.shrink(),
     );
   }

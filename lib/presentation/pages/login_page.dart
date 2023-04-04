@@ -12,7 +12,7 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tema = Theme.of(context).primaryTextTheme;
+    final tema = Theme.of(context).textTheme;
     return Scaffold(
         body: CustomScrollView(
       slivers: [

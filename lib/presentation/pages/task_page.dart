@@ -32,7 +32,7 @@ class TaskPage extends StatelessWidget {
                 const SizedBox(height: 10.0),
                 Text(
                   'Click para abrir galería',
-                  style: Theme.of(context).primaryTextTheme.headlineMedium?.copyWith(fontSize: 12),
+                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontSize: 12),
                 ),
                 const LabelField(label: 'Título'),
                 Field(
