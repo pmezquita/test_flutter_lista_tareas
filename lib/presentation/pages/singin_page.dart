@@ -26,6 +26,7 @@ class SinginPage extends StatelessWidget {
                 'Crear una Cuenta',
                 style: tema.headlineLarge,
               ),
+              const SizedBox(height: 5.0),
               const LabelField(label: 'Nombre de Usuario'),
               const Field(
                 textValue: '',

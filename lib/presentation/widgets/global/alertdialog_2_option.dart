@@ -26,8 +26,8 @@ class AlertDialog2Opt extends StatelessWidget {
     final tema = Theme.of(context).primaryTextTheme;
     return AlertDialog(
       backgroundColor: primary90,
-      title: Text(title, style: tema.bodyMedium),
-      content: Text(content, style: tema.headlineMedium),
+      title: Text(title, style: tema.bodyMedium, textAlign: TextAlign.center),
+      content: Text(content, style: tema.headlineMedium, textAlign: TextAlign.center),
       actions: <Widget>[
         Row(
           crossAxisAlignment: CrossAxisAlignment.center,
