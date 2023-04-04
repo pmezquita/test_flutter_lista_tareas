@@ -41,8 +41,8 @@ class LoginPage extends StatelessWidget {
                     textValue: '',
                     hint: 'Escribe tu contraseña',
                     prefixIcon: Icons.lock_outline,
-                    obscureText: state.obscurePassword1,
                     suffixIcon: state.obscurePassword1 ? Icons.visibility_outlined : Icons.visibility_off_outlined,
+                    obscureText: state.obscurePassword1,
                     onPressedSuffixIcon: () => BlocProvider.of<UserBloc>(context).add(TogglePassword1()),
                   );
                 },
