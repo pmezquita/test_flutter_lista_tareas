@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:lista_tareas/presentation/widgets/global/button_update.dart';
-import 'package:lista_tareas/presentation/widgets/login/button_login_singin.dart';
 import 'package:lista_tareas/presentation/widgets/task/avatar_task.dart';
 import 'package:lista_tareas/presentation/widgets/task/button_task.dart';
-import 'package:lista_tareas/theme/app_theme.dart';
 
 import '../../models/task_model.dart';
 import '../widgets/global/appbar.dart';
-import '../widgets/global/button_principal.dart';
 import '../widgets/global/field.dart';
 import '../widgets/global/label_field.dart';
 import '../widgets/task/button_task_update.dart';
@@ -32,7 +28,7 @@ class TaskPage extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 const SizedBox(height: 30.0),
-                AvatarTask(imgB64: '', radius: 70),
+                AvatarTask(imgB64: tarea.imgB64, radius: 70),
                 const SizedBox(height: 10.0),
                 Text(
                   'Click para abrir galería',
@@ -52,7 +48,9 @@ class TaskPage extends StatelessWidget {
                 const LabelField(label: 'Fecha'),
                 _rowFecha(),
                 const Expanded(child: SizedBox.shrink()),
-                ButtonTaskUpdate(text: 'Actualizar', onPressed: () => Navigator.pop(context)),
+                tarea.isNew
+                    ? const SizedBox.shrink()
+                    : ButtonTaskUpdate(text: 'Actualizar', onPressed: () => Navigator.pop(context)),
                 ButtonTask(text: 'Crear', icon: Icons.check, onPressed: () => Navigator.pop(context)),
               ],
             ),

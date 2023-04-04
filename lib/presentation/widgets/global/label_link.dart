@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../theme/app_theme.dart';
 
 class LabelLink extends StatelessWidget {
   final String label1;
   final String label2;
+  final String nameRoute;
 
-  const LabelLink({Key? key, required this.label1, required this.label2}) : super(key: key);
+  const LabelLink({
+    Key? key,
+    required this.label1,
+    required this.label2,
+    required this.nameRoute,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,9 +35,12 @@ class LabelLink extends StatelessWidget {
                   'Puedes ',
                   style: tema.headlineMedium,
                 ),
-                Text(
-                  label2,
-                  style: tema.headlineMedium?.copyWith(fontWeight: FontWeight.w700),
+                InkWell(
+                  child: Text(
+                    label2,
+                    style: tema.headlineMedium?.copyWith(fontWeight: FontWeight.w700),
+                  ),
+                  onTap: () => context.goNamed(nameRoute),
                 ),
               ],
             ),

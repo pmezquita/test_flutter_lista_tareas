@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lista_tareas/presentation/widgets/global/button_principal.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lista_tareas/presentation/widgets/global/label_link.dart';
 import 'package:lista_tareas/presentation/widgets/global/field.dart';
 import 'package:lista_tareas/presentation/widgets/global/fondo.dart';
@@ -46,9 +46,10 @@ class SinginPage extends StatelessWidget {
                 icon: Icons.lock_outline,
                 obscureText: true,
               ),
-              const LabelLink(label1: '¿Ya tienes una contraseña?', label2: 'Ingresar con tu cuenta'),
+              const LabelLink(
+                  label1: '¿Ya tienes una contraseña?', label2: 'Ingresar con tu cuenta', nameRoute: 'login'),
               const Expanded(child: SizedBox.shrink()),
-              const ButtonLoginSingin(text: 'Continuar', isPrimary: false),
+              ButtonLoginSingin(text: 'Continuar', isPrimary: false, onPressed: () => context.goNamed('login')),
             ],
           ),
         ),

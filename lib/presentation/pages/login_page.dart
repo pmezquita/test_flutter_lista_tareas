@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:lista_tareas/presentation/widgets/global/button_principal.dart';
 import 'package:lista_tareas/presentation/widgets/global/label_link.dart';
 import 'package:lista_tareas/presentation/widgets/global/field.dart';
 import 'package:lista_tareas/presentation/widgets/global/fondo.dart';
@@ -41,7 +40,7 @@ class LoginPage extends StatelessWidget {
                 icon: Icons.lock_outline,
                 obscureText: true,
               ),
-              const LabelLink(label1: '¿No tienes una cuenta?', label2: 'Crear una nueva'),
+              const LabelLink(label1: '¿No tienes una cuenta?', label2: 'Crear una nueva', nameRoute: 'singin'),
               const Expanded(child: SizedBox.shrink()),
               ButtonLoginSingin(text: 'Continuar', onPressed: () => context.pushNamed('home')),
             ],
