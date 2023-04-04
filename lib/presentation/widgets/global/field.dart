@@ -7,7 +7,9 @@ class Field extends StatelessWidget {
   final String? textValue;
   final String hint;
   final TextInputType keyboardType;
-  final IconData? icon;
+  final IconData? prefixIcon;
+  final IconData? suffixIcon;
+  final VoidCallback? onPressedSuffixIcon;
   final bool obscureText;
   final bool digitsOnly;
   final bool enabled;
@@ -16,7 +18,9 @@ class Field extends StatelessWidget {
     Key? key,
     this.textValue,
     required this.hint,
-    this.icon,
+    this.prefixIcon,
+    this.suffixIcon,
+    this.onPressedSuffixIcon,
     this.keyboardType = TextInputType.text,
     this.obscureText = false,
     this.digitsOnly = false,
@@ -40,8 +44,15 @@ class Field extends StatelessWidget {
           filled: !enabled,
           fillColor: enabled ? null : primary90,
           hintText: hint,
-          prefixIcon:
-              icon != null ? Padding(padding: const EdgeInsets.all(12.0), child: Icon(icon, color: primary40)) : null,
+          prefixIcon: prefixIcon != null
+              ? Padding(padding: const EdgeInsets.all(14.5), child: Icon(prefixIcon, color: primary40))
+              : null,
+          suffixIcon: suffixIcon != null
+              ? IconButton(
+                  icon: Icon(suffixIcon, color: primary40),
+                  onPressed: onPressedSuffixIcon,
+                )
+              : null,
         ),
         validator: (value) {
           return null;

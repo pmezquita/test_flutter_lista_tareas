@@ -30,20 +30,20 @@ class SinginPage extends StatelessWidget {
               const Field(
                 textValue: '',
                 hint: 'Escoge un nombre de Usuario',
-                icon: Icons.person_outline,
+                prefixIcon: Icons.person_outline,
               ),
               const LabelField(label: 'Escoge una contraseña'),
               const Field(
                 textValue: '',
                 hint: 'Contraseña mayor a 8 dígitos',
-                icon: Icons.lock_outline,
+                prefixIcon: Icons.lock_outline,
                 obscureText: true,
               ),
               const LabelField(label: 'Confirma tu contraseña'),
               const Field(
                 textValue: '',
                 hint: 'Verifica tu contraseña',
-                icon: Icons.lock_outline,
+                prefixIcon: Icons.lock_outline,
                 obscureText: true,
               ),
               const LabelLink(
