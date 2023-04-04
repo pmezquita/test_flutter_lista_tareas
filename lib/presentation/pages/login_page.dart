@@ -20,7 +20,7 @@ class LoginPage extends StatelessWidget {
           hasScrollBody: false,
           child: Column(
             children: <Widget>[
-              const Fondo(colorIni: primary40, colorFin: primary90),
+              const Fondo(color1: primary20, color2: primary40, color3: primary60, maxHeight: 200),
               const SizedBox(height: 40.0),
               Text(
                 'Iniciar Sesión',

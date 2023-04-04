@@ -20,7 +20,7 @@ class SinginPage extends StatelessWidget {
           hasScrollBody: false,
           child: Column(
             children: <Widget>[
-              const Fondo(colorIni: secondary20, colorFin: secondary90),
+              const Fondo(color1: secondary20, color2: secondary40, color3: secondary60, maxHeight: 200),
               const SizedBox(height: 40.0),
               Text(
                 'Crear una Cuenta',

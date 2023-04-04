@@ -15,6 +15,9 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      // toolbarHeight: 400,
+      // backgroundColor: Colors.transparent,
+      // flexibleSpace: const Fondo(color1: primary20, color2: primary40, color3: primary60, maxHeight: 80),
       leading: (showBack)
           ? IconButton(
               icon: const Icon(Icons.arrow_back_ios),
