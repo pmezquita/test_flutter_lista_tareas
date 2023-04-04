@@ -4,21 +4,23 @@ import 'package:flutter/services.dart';
 import '../../../theme/app_theme.dart';
 
 class Field extends StatelessWidget {
-  final String textValue;
+  final String? textValue;
   final String hint;
   final TextInputType keyboardType;
   final IconData? icon;
   final bool obscureText;
   final bool digitsOnly;
+  final bool enabled;
 
   const Field({
     Key? key,
-    required this.textValue,
+    this.textValue,
     required this.hint,
     this.icon,
     this.keyboardType = TextInputType.text,
     this.obscureText = false,
     this.digitsOnly = false,
+    this.enabled = true,
   }) : super(key: key);
 
   @override
@@ -27,6 +29,7 @@ class Field extends StatelessWidget {
     return Padding(
       padding: myPaddingField,
       child: TextFormField(
+        enabled: enabled,
         obscureText: obscureText,
         initialValue: textValue,
         keyboardType: digitsOnly ? TextInputType.number : keyboardType,
@@ -36,8 +39,8 @@ class Field extends StatelessWidget {
         decoration: _myDecoration(
           hint: hint,
           context: context,
-          blanco: true,
           icon: icon,
+          enabled: enabled,
         ),
         validator: (value) {
           return null;
@@ -51,28 +54,15 @@ class Field extends StatelessWidget {
   InputDecoration _myDecoration({
     required BuildContext context,
     IconData? icon,
-    bool blanco = false,
     String? hint,
+    required bool enabled,
   }) {
-    final tema = Theme.of(context);
-
     return InputDecoration(
+      filled: !enabled,
+      fillColor: enabled ? null : primary90,
       hintText: hint,
-      hintStyle: tema.primaryTextTheme.displayMedium,
-      prefixIcon: icon != null
-          ? Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Icon(icon, color: primary40),
-            )
-          : null,
-      enabledBorder: const OutlineInputBorder(
-        borderRadius: BorderRadius.all(Radius.circular(6.0)),
-        borderSide: BorderSide(color: primary60),
-      ),
-      focusedBorder: const OutlineInputBorder(
-        borderRadius: BorderRadius.all(Radius.circular(6.0)),
-        borderSide: BorderSide(color: secondary40),
-      ),
+      prefixIcon:
+          icon != null ? Padding(padding: const EdgeInsets.all(12.0), child: Icon(icon, color: primary40)) : null,
     );
   }
 }

@@ -23,32 +23,46 @@ class AppTheme {
   AppTheme();
 
   ThemeData theme() => ThemeData(
-        colorSchemeSeed: primary40,
-        secondaryHeaderColor: secondary40,
-        fontFamily: GoogleFonts.poppins().fontFamily,
-        primaryTextTheme: GoogleFonts.poppinsTextTheme().copyWith(
-          titleMedium: const TextStyle(color: Colors.white, fontSize: 24.0, fontWeight: FontWeight.w500),
-          headlineLarge: const TextStyle(color: primary40, fontSize: 25.0, fontWeight: FontWeight.w600),
-          headlineMedium: const TextStyle(color: primary40, fontSize: 14.0, fontWeight: FontWeight.w400),
-          bodyLarge: const TextStyle(color: primary40, fontSize: 12.0, fontWeight: FontWeight.w600),
-          bodyMedium: const TextStyle(color: primary20, fontSize: 14.0, fontWeight: FontWeight.w400),
-          displayMedium: const TextStyle(color: primary60, fontSize: 12.0, fontWeight: FontWeight.w400),
-          labelLarge: const TextStyle(color: primary20, fontSize: 18.0, fontWeight: FontWeight.w700),
-          labelMedium: const TextStyle(color: primary20, fontSize: 15.0, fontWeight: FontWeight.w400),
-          labelSmall: const TextStyle(color: primary20, fontSize: 14.0, fontWeight: FontWeight.w700),
-          displaySmall: const TextStyle(color: secondary40, fontSize: 15.0, fontWeight: FontWeight.w600),
+      colorSchemeSeed: primary40,
+      secondaryHeaderColor: secondary40,
+      fontFamily: GoogleFonts.poppins().fontFamily,
+      primaryTextTheme: GoogleFonts.poppinsTextTheme().copyWith(
+        titleMedium: const TextStyle(color: Colors.white, fontSize: 24.0, fontWeight: FontWeight.w500),
+        headlineLarge: const TextStyle(color: primary40, fontSize: 25.0, fontWeight: FontWeight.w600),
+        headlineMedium: const TextStyle(color: primary40, fontSize: 14.0, fontWeight: FontWeight.w400),
+        bodyLarge: const TextStyle(color: primary40, fontSize: 12.0, fontWeight: FontWeight.w600),
+        bodyMedium: const TextStyle(color: primary20, fontSize: 14.0, fontWeight: FontWeight.w400),
+        displayMedium: const TextStyle(color: primary60, fontSize: 12.0, fontWeight: FontWeight.w400),
+        labelLarge: const TextStyle(color: primary20, fontSize: 18.0, fontWeight: FontWeight.w700),
+        labelMedium: const TextStyle(color: primary20, fontSize: 15.0, fontWeight: FontWeight.w400),
+        labelSmall: const TextStyle(color: primary20, fontSize: 14.0, fontWeight: FontWeight.w700),
+        displaySmall: const TextStyle(color: secondary40, fontSize: 15.0, fontWeight: FontWeight.w600),
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+            elevation: 0.0,
+            shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(12.0))),
+            backgroundColor: primary40,
+            foregroundColor: Colors.white,
+            textStyle: const TextStyle(
+              color: Colors.white,
+              fontSize: 15.0,
+              fontWeight: FontWeight.w600,
+            )),
+      ),
+      inputDecorationTheme: const InputDecorationTheme(
+        hintStyle: TextStyle(color: primary60, fontSize: 12.0, fontWeight: FontWeight.w400),
+        disabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(6.0)),
+          borderSide: BorderSide(color: primary40),
         ),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-              elevation: 0.0,
-              shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(12.0))),
-              backgroundColor: primary40,
-              foregroundColor: Colors.white,
-              textStyle: const TextStyle(
-                color: Colors.white,
-                fontSize: 15.0,
-                fontWeight: FontWeight.w600,
-              )),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(6.0)),
+          borderSide: BorderSide(color: primary60),
         ),
-      );
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(6.0)),
+          borderSide: BorderSide(color: secondary40),
+        ),
+      ));
 }

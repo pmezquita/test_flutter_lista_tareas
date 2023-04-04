@@ -35,13 +35,15 @@ class TaskPage extends StatelessWidget {
                   style: Theme.of(context).primaryTextTheme.headlineMedium?.copyWith(fontSize: 12),
                 ),
                 const LabelField(label: 'Título'),
-                const Field(
-                  textValue: '',
+                Field(
+                  enabled: !tarea.completada,
+                  textValue: tarea.titulo,
                   hint: 'Escribe aquí el título de tu tarea',
                 ),
                 const LabelField(label: 'Descripción'),
-                const Field(
-                  textValue: '',
+                Field(
+                  enabled: !tarea.completada,
+                  textValue: tarea.descripcion,
                   hint: 'Describe cómo será tu tarea',
                   keyboardType: TextInputType.multiline,
                 ),
@@ -61,24 +63,27 @@ class TaskPage extends StatelessWidget {
   }
 
   Widget _rowFecha() => Row(
-        children: const [
+        children: [
           Expanded(
             child: Field(
-              textValue: '',
+              enabled: !tarea.completada,
+              textValue: tarea.dia?.toString(),
               hint: 'Día',
               digitsOnly: true,
             ),
           ),
           Expanded(
             child: Field(
-              textValue: '',
+              enabled: !tarea.completada,
+              textValue: tarea.mes?.toString(),
               hint: 'Mes',
               digitsOnly: true,
             ),
           ),
           Expanded(
             child: Field(
-              textValue: '',
+              enabled: !tarea.completada,
+              textValue: tarea.anio?.toString(),
               hint: 'Año',
               digitsOnly: true,
             ),
