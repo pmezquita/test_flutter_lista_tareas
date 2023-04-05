@@ -10,7 +10,7 @@ abstract class UserState {
 }
 
 class UserInitialState extends UserState {
-  const UserInitialState() : super();
+  UserInitialState() : super(user: UserModel());
 }
 
 class UserSetState extends UserState {

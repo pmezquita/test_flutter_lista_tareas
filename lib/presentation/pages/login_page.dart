@@ -96,7 +96,11 @@ class LoginPage extends StatelessWidget {
               );
             },
           ),
-          const LabelLink(label1: '¿No tienes una cuenta?', label2: 'Crear una nueva', nameRoute: 'singin'),
+          LabelLink(
+            label1: '¿No tienes una cuenta?',
+            label2: 'Crear una nueva',
+            onTap: () => context.goNamed('singin'),
+          ),
         ],
       ),
     );

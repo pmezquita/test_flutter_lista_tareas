@@ -9,38 +9,54 @@ import 'package:lista_tareas/presentation/widgets/login/button_login_singin.dart
 import 'package:lista_tareas/theme/app_theme.dart';
 
 import '../../bloc/user/user_bloc.dart';
+import '../../helpers/constants.dart';
+import '../../helpers/utils.dart';
+import '../../models/user_model.dart';
 
 class SinginPage extends StatelessWidget {
   const SinginPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: CustomScrollView(
-      slivers: [
-        SliverFillRemaining(
-          hasScrollBody: false,
-          child: Column(
-            children: <Widget>[
-              const Fondo.secondary(),
-              const SizedBox(height: 40.0),
-              Text(
-                'Crear una Cuenta',
-                style: Theme.of(context).textTheme.headlineLarge,
+    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+    final GlobalKey<ScaffoldMessengerState> scaffoldKey = GlobalKey<ScaffoldMessengerState>();
+    UserModel user = UserModel();
+
+    return ScaffoldMessenger(
+      key: scaffoldKey,
+      child: Scaffold(
+          body: CustomScrollView(
+        slivers: [
+          SliverFillRemaining(
+            hasScrollBody: false,
+            child: Form(
+              key: formKey,
+              child: Column(
+                children: <Widget>[
+                  const Fondo.secondary(),
+                  const SizedBox(height: 40.0),
+                  Text(
+                    'Crear una Cuenta',
+                    style: Theme.of(context).textTheme.headlineLarge,
+                  ),
+                  const SizedBox(height: 5.0),
+                  _formulario(context),
+                  const Expanded(child: SizedBox.shrink()),
+                  ButtonLoginSingin(
+                      text: 'Continuar', isPrimary: false, onPressed: () => _submit(formKey, scaffoldKey, user)),
+                ],
               ),
-              const SizedBox(height: 5.0),
-              _formulario(context),
-              const Expanded(child: SizedBox.shrink()),
-              ButtonLoginSingin(text: 'Continuar', isPrimary: false, onPressed: () => context.goNamed('login')),
-            ],
+            ),
           ),
-        ),
-      ],
-    ));
+        ],
+      )),
+    );
   }
 
   Widget _formulario(BuildContext context) {
     final userBloc = BlocProvider.of<UserBloc>(context);
+    final TextEditingController textCtrlPass1 = TextEditingController();
+
     return Padding(
       padding: myPaddingForm,
       child: Column(
@@ -49,12 +65,18 @@ class SinginPage extends StatelessWidget {
           TextFormField(
             initialValue: '',
             decoration: textFieldDecoration(hint: 'Escoge un nombre de Usuario', prefixIcon: Icons.person_outline),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return errorCampoObligatorio;
+              }
+              return null;
+            },
           ),
           const LabelField(label: 'Escoge una contraseña'),
           BlocBuilder<UserBloc, UserState>(
             builder: (context, state) {
               return TextFormField(
-                initialValue: '',
+                controller: textCtrlPass1,
                 obscureText: state.obscurePassword1,
                 decoration: textFieldDecoration(
                   hint: 'Contraseña mayor a 8 dígitos',
@@ -62,6 +84,14 @@ class SinginPage extends StatelessWidget {
                   suffixIcon: state.obscurePassword1 ? Icons.visibility_outlined : Icons.visibility_off_outlined,
                   onPressedSuffixIcon: () => userBloc.add(TogglePassword1Event()),
                 ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return errorCampoObligatorio;
+                  }
+                  if (value.length < 8) return 'Debe ser mayor a 8 dígitos';
+
+                  return null;
+                },
               );
             },
           ),
@@ -77,16 +107,39 @@ class SinginPage extends StatelessWidget {
                   suffixIcon: state.obscurePassword2 ? Icons.visibility_outlined : Icons.visibility_off_outlined,
                   onPressedSuffixIcon: () => userBloc.add(TogglePassword2Event()),
                 ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return errorCampoObligatorio;
+                  }
+                  if (value != textCtrlPass1.text) {
+                    return 'Las contraseña no coincide';
+                  }
+                  return null;
+                },
               );
             },
           ),
-          const LabelLink(
-            label1: '¿Ya tienes una contraseña?',
-            label2: 'Ingresar con tu cuenta',
-            nameRoute: 'login',
-          ),
+          LabelLink(
+              label1: '¿Ya tienes una contraseña?',
+              label2: 'Ingresar con tu cuenta',
+              onTap: () => context.goNamed('login')),
         ],
       ),
     );
+  }
+
+  void _submit(
+    GlobalKey<FormState> formKey,
+    GlobalKey<ScaffoldMessengerState> scaffoldKey,
+    UserModel user,
+  ) {
+    if (!(formKey.currentState?.validate() ?? false)) {
+      showInSnackBar(scaffoldKey, errorVerificar);
+      return;
+    } else {
+      formKey.currentState?.save();
+      final context = formKey.currentContext!;
+      context.goNamed('login');
+    }
   }
 }

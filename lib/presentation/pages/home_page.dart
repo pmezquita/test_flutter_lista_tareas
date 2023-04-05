@@ -18,7 +18,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: const MyAppBar(title: 'Home'),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: Fab(onPressed: () => context.pushNamed('taskView',extra: Task())),
+      floatingActionButton: Fab(onPressed: () => context.pushNamed('taskView', extra: Task())),
       bottomNavigationBar: const BottomNavbar(selectedIndex: 0),
       body: CustomScrollView(
         slivers: [
