@@ -26,7 +26,7 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget {
           : const SizedBox.shrink(),
       title: Text(
         title,
-        style: Theme.of(context).textTheme.titleMedium,
+        style: Theme.of(context).textTheme.titleSmall,
       ),
     );
   }
