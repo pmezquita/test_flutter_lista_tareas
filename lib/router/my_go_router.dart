@@ -7,8 +7,14 @@ import 'package:lista_tareas/presentation/pages/task_page.dart';
 
 final myGoRouter = GoRouter(
   routes: [
+    // TODO: eliminar este route
     GoRoute(
       path: '/',
+      name: 'home',
+      builder: (context, state) => const HomePage(),
+    ),
+    GoRoute(
+      path: '/login', // TODO: regresar a /
       name: 'login',
       builder: (context, state) => const LoginPage(),
     ),
@@ -17,11 +23,11 @@ final myGoRouter = GoRouter(
       name: 'singin',
       builder: (context, state) => const SinginPage(),
     ),
-    GoRoute(
-      path: '/home',
-      name: 'home',
-      builder: (context, state) => const HomePage(),
-    ),
+    // GoRoute(
+    //   path: '/home',
+    //   name: 'home',
+    //   builder: (context, state) => const HomePage(),
+    // ),
     GoRoute(
       path: '/task',
       name: 'taskView',

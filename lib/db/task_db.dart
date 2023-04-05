@@ -21,7 +21,7 @@ const String createTableTask = '''
 ''';
 
 class TaskDb {
-  Future<Task> insert(Task task) async {
+  static Future<Task> insert(Task task) async {
     final db = await DBProvider.db.database;
     task.id = await db.insert(tableTask, task.toMap());
     return task;

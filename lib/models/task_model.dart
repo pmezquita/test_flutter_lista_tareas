@@ -47,6 +47,8 @@ class Task {
 
   bool get isNew => id == null;
 
+  bool get isEditable => !completada;
+
   Task.fromMap(Map<String, dynamic> map) {
     id = map[columnId];
     titulo = map[columnTitulo];
