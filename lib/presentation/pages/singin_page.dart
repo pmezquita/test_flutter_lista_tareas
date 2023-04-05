@@ -67,9 +67,10 @@ class SinginPage extends StatelessWidget {
             initialValue: '',
             decoration: textFieldDecoration(hint: 'Escoge un nombre de Usuario', prefixIcon: Icons.person_outline),
             validator: (value) {
-              if (value == null || value.isEmpty) {
-                return errorCampoObligatorio;
-              }
+              if (value == null || value.isEmpty) return errorCampoObligatorio;
+
+              if (value.contains(' ')) return errorNoEspacio;
+
               return null;
             },
             onSaved: (value) {
@@ -89,9 +90,10 @@ class SinginPage extends StatelessWidget {
                   onPressedSuffixIcon: () => userBloc.add(TogglePassword1Event()),
                 ),
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return errorCampoObligatorio;
-                  }
+                  if (value == null || value.isEmpty) return errorCampoObligatorio;
+
+                  if (value.contains(' ')) return errorNoEspacio;
+
                   if (value.length < 8) return 'Debe ser mayor a 8 dígitos';
 
                   return null;
@@ -112,12 +114,10 @@ class SinginPage extends StatelessWidget {
                   onPressedSuffixIcon: () => userBloc.add(TogglePassword2Event()),
                 ),
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return errorCampoObligatorio;
-                  }
-                  if (value != textCtrlPass1.text) {
-                    return 'Las contraseña no coincide';
-                  }
+                  if (value == null || value.isEmpty) return errorCampoObligatorio;
+
+                  if (value != textCtrlPass1.text) return 'Las contraseña no coincide';
+
                   return null;
                 },
                 onSaved: (value) {
@@ -148,11 +148,11 @@ class SinginPage extends StatelessWidget {
       formKey.currentState?.save();
 
       // Verificar que no exista el usuario en la BD
-      if (await UserDb.existByUsername(user.username ?? '')) {
+      if (await UserDb.existByUsername(user.username)) {
         showInSnackBar(scaffoldKey, 'Usuario ya existe');
         return;
       }
-
+      // TODO: implementar encriptado
       // Crear nuevo usuario
       if ((await UserDb.insert(user)).id == null) {
         showInSnackBar(scaffoldKey, 'Error creando usuario');

@@ -27,7 +27,7 @@ class TaskDb {
     return task;
   }
 
-  Future<Task?> getTask(int id) async {
+  static Future<Task?> getTask(int id) async {
     final db = await DBProvider.db.database;
     List<Map<String, dynamic>> maps = await db.query(tableTask, where: '$columnId = ?', whereArgs: [id]);
     if (maps.isNotEmpty) {
@@ -36,7 +36,7 @@ class TaskDb {
     return null;
   }
 
-  Future<List<Task>?> getTaskType(int completada) async {
+  static Future<List<Task>?> getTaskType(int completada) async {
     final db = await DBProvider.db.database;
     List<Map<String, dynamic>> maps =
         await db.query(tableTask, where: '$columnCompletada = ?', whereArgs: [completada]);
@@ -46,17 +46,17 @@ class TaskDb {
     return null;
   }
 
-  Future<int> delete(int id) async {
+  static Future<int> delete(int id) async {
     final db = await DBProvider.db.database;
     return await db.delete(tableTask, where: '$columnId = ?', whereArgs: [id]);
   }
 
-  Future<int> update(Task task) async {
+  static Future<int> update(Task task) async {
     final db = await DBProvider.db.database;
     return await db.update(tableTask, task.toMap(), where: '$columnId = ?', whereArgs: [task.id]);
   }
 
-  Future close() async {
+  static Future close() async {
     final db = await DBProvider.db.database;
     return db.close();
   }

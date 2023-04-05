@@ -11,6 +11,7 @@ import 'package:lista_tareas/presentation/widgets/global/label_field.dart';
 import 'package:lista_tareas/presentation/widgets/login/button_login_singin.dart';
 import 'package:lista_tareas/theme/app_theme.dart';
 
+import '../../db/user_db.dart';
 import '../../helpers/utils.dart';
 
 class LoginPage extends StatelessWidget {
@@ -62,9 +63,8 @@ class LoginPage extends StatelessWidget {
             initialValue: '',
             decoration: textFieldDecoration(hint: 'Coloca tu nombre de Usuario', prefixIcon: Icons.person_outline),
             validator: (value) {
-              if (value == null || value.isEmpty) {
-                return errorCampoObligatorio;
-              }
+              if (value == null || value.isEmpty) return errorCampoObligatorio;
+
               return null;
             },
             onSaved: (value) {
@@ -85,12 +85,12 @@ class LoginPage extends StatelessWidget {
                   onPressedSuffixIcon: () => BlocProvider.of<UserBloc>(context).add(TogglePassword1Event()),
                 ),
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return errorCampoObligatorio;
-                  }
+                  if (value == null || value.isEmpty) return errorCampoObligatorio;
+
                   return null;
                 },
                 onSaved: (value) {
+                  user.password = value;
                   user.password = value;
                 },
               );
@@ -110,15 +110,25 @@ class LoginPage extends StatelessWidget {
     GlobalKey<FormState> formKey,
     GlobalKey<ScaffoldMessengerState> scaffoldKey,
     UserModel user,
-  ) {
+  ) async {
     if (!(formKey.currentState?.validate() ?? false)) {
       showInSnackBar(scaffoldKey, errorVerificar);
       return;
     } else {
       formKey.currentState?.save();
       final context = formKey.currentContext!;
-      BlocProvider.of<UserBloc>(context).add(SetUserEvent(user));
-      context.pushNamed('home');
+
+      // Verificar credenciales
+      if (!await UserDb.isValid(user.username, user.password)) {
+        showInSnackBar(scaffoldKey, 'Usuario y/o contraseña incorrecto');
+        return;
+      }
+
+      // Redireccionar a Home
+      if (context.mounted) {
+        BlocProvider.of<UserBloc>(context).add(SetUserEvent(user));
+        context.pushNamed('home');
+      }
     }
   }
 }

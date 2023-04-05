@@ -30,9 +30,23 @@ class UserDb {
     return null;
   }
 
-  static Future<bool> existByUsername(String username) async {
+  static Future<bool> isValid(String? username, String? password) async {
     final db = await DBProvider.db.database;
-    List<Map<String, dynamic>> maps = await db.query(tableUser, where: '$columnUsername = ?', whereArgs: [username]);
+    List<Map<String, dynamic>> maps = await db.query(
+      tableUser,
+      where: '$columnUsername = ? AND $columnPassword = ?',
+      whereArgs: [username ?? '', password ?? ''],
+    );
+    if (maps.isNotEmpty) {
+      return true;
+    }
+    return false;
+  }
+
+  static Future<bool> existByUsername(String? username) async {
+    final db = await DBProvider.db.database;
+    List<Map<String, dynamic>> maps =
+        await db.query(tableUser, where: '$columnUsername = ?', whereArgs: [username ?? '']);
     if (maps.isEmpty) {
       return false;
     }
