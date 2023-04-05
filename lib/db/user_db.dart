@@ -15,34 +15,41 @@ const String createTableUser = '''
 ''';
 
 class UserDb {
-
-  Future<UserModel> insert(UserModel user) async {
+  static Future<UserModel> insert(UserModel user) async {
     final db = await DBProvider.db.database;
     user.id = await db.insert(tableUser, user.toMap());
     return user;
   }
 
-  Future<UserModel?> getUser(int id) async {
+  static Future<UserModel?> getById(int id) async {
     final db = await DBProvider.db.database;
-    List<Map<String, dynamic>> maps = await db.query(tableUser,
-        where: '$columnId = ?', whereArgs: [id]);
+    List<Map<String, dynamic>> maps = await db.query(tableUser, where: '$columnId = ?', whereArgs: [id]);
     if (maps.isNotEmpty) {
       return UserModel.fromMap(maps.first);
     }
     return null;
   }
 
-  Future<int> delete(int id) async {
+  static Future<bool> existByUsername(String username) async {
+    final db = await DBProvider.db.database;
+    List<Map<String, dynamic>> maps = await db.query(tableUser, where: '$columnUsername = ?', whereArgs: [username]);
+    if (maps.isEmpty) {
+      return false;
+    }
+    return true;
+  }
+
+  static Future<int> delete(int id) async {
     final db = await DBProvider.db.database;
     return await db.delete(tableUser, where: '$columnId = ?', whereArgs: [id]);
   }
 
-  Future<int> update(UserModel user) async {
+  static Future<int> update(UserModel user) async {
     final db = await DBProvider.db.database;
     return await db.update(tableUser, user.toMap(), where: '$columnId = ?', whereArgs: [user.id]);
   }
 
-  Future close() async {
+  static Future close() async {
     final db = await DBProvider.db.database;
     return db.close();
   }

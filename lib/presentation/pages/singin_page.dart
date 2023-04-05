@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:lista_tareas/db/user_db.dart';
 import 'package:lista_tareas/presentation/widgets/global/decoration_field.dart';
 import 'package:lista_tareas/presentation/widgets/global/label_link.dart';
 import 'package:lista_tareas/presentation/widgets/global/fondo.dart';
@@ -40,7 +41,7 @@ class SinginPage extends StatelessWidget {
                     style: Theme.of(context).textTheme.headlineLarge,
                   ),
                   const SizedBox(height: 5.0),
-                  _formulario(context),
+                  _formulario(context, user),
                   const Expanded(child: SizedBox.shrink()),
                   ButtonLoginSingin(
                       text: 'Continuar', isPrimary: false, onPressed: () => _submit(formKey, scaffoldKey, user)),
@@ -53,7 +54,7 @@ class SinginPage extends StatelessWidget {
     );
   }
 
-  Widget _formulario(BuildContext context) {
+  Widget _formulario(BuildContext context, UserModel user) {
     final userBloc = BlocProvider.of<UserBloc>(context);
     final TextEditingController textCtrlPass1 = TextEditingController();
 
@@ -70,6 +71,9 @@ class SinginPage extends StatelessWidget {
                 return errorCampoObligatorio;
               }
               return null;
+            },
+            onSaved: (value) {
+              user.username = value;
             },
           ),
           const LabelField(label: 'Escoge una contraseña'),
@@ -116,6 +120,9 @@ class SinginPage extends StatelessWidget {
                   }
                   return null;
                 },
+                onSaved: (value) {
+                  user.password = value;
+                },
               );
             },
           ),
@@ -132,14 +139,30 @@ class SinginPage extends StatelessWidget {
     GlobalKey<FormState> formKey,
     GlobalKey<ScaffoldMessengerState> scaffoldKey,
     UserModel user,
-  ) {
+  ) async {
+    final context = formKey.currentContext!;
     if (!(formKey.currentState?.validate() ?? false)) {
       showInSnackBar(scaffoldKey, errorVerificar);
       return;
     } else {
       formKey.currentState?.save();
-      final context = formKey.currentContext!;
-      context.goNamed('login');
+
+      // Verificar que no exista el usuario en la BD
+      if (await UserDb.existByUsername(user.username ?? '')) {
+        showInSnackBar(scaffoldKey, 'Usuario ya existe');
+        return;
+      }
+
+      // Crear nuevo usuario
+      if ((await UserDb.insert(user)).id == null) {
+        showInSnackBar(scaffoldKey, 'Error creando usuario');
+        return;
+      }
+
+      // Redireccionar a login
+      if (context.mounted) {
+        context.goNamed('login');
+      }
     }
   }
 }
