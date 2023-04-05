@@ -15,8 +15,6 @@ class SinginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tema = Theme.of(context).textTheme;
-    final userBloc = BlocProvider.of<UserBloc>(context);
     return Scaffold(
         body: CustomScrollView(
       slivers: [
@@ -28,59 +26,10 @@ class SinginPage extends StatelessWidget {
               const SizedBox(height: 40.0),
               Text(
                 'Crear una Cuenta',
-                style: tema.headlineLarge,
+                style: Theme.of(context).textTheme.headlineLarge,
               ),
               const SizedBox(height: 5.0),
-              Padding(
-                padding: myPaddingForm,
-                child: Column(
-                  children: [
-                    const LabelField(label: 'Nombre de Usuario'),
-                    TextFormField(
-                      initialValue: '',
-                      decoration:
-                          textFieldDecoration(hint: 'Escoge un nombre de Usuario', prefixIcon: Icons.person_outline),
-                    ),
-                    const LabelField(label: 'Escoge una contraseña'),
-                    BlocBuilder<UserBloc, UserState>(
-                      builder: (context, state) {
-                        return TextFormField(
-                          initialValue: '',
-                          obscureText: state.obscurePassword1,
-                          decoration: textFieldDecoration(
-                            hint: 'Contraseña mayor a 8 dígitos',
-                            prefixIcon: Icons.lock_outline,
-                            suffixIcon:
-                                state.obscurePassword1 ? Icons.visibility_outlined : Icons.visibility_off_outlined,
-                            onPressedSuffixIcon: () => userBloc.add(TogglePassword1Event()),
-                          ),
-                        );
-                      },
-                    ),
-                    const LabelField(label: 'Confirma tu contraseña'),
-                    BlocBuilder<UserBloc, UserState>(
-                      builder: (context, state) {
-                        return TextFormField(
-                          initialValue: '',
-                          obscureText: state.obscurePassword2,
-                          decoration: textFieldDecoration(
-                            hint: 'Verifica tu contraseña',
-                            prefixIcon: Icons.lock_outline,
-                            suffixIcon:
-                                state.obscurePassword2 ? Icons.visibility_outlined : Icons.visibility_off_outlined,
-                            onPressedSuffixIcon: () => userBloc.add(TogglePassword2Event()),
-                          ),
-                        );
-                      },
-                    ),
-                    const LabelLink(
-                      label1: '¿Ya tienes una contraseña?',
-                      label2: 'Ingresar con tu cuenta',
-                      nameRoute: 'login',
-                    ),
-                  ],
-                ),
-              ),
+              _formulario(context),
               const Expanded(child: SizedBox.shrink()),
               ButtonLoginSingin(text: 'Continuar', isPrimary: false, onPressed: () => context.goNamed('login')),
             ],
@@ -88,5 +37,56 @@ class SinginPage extends StatelessWidget {
         ),
       ],
     ));
+  }
+
+  Widget _formulario(BuildContext context) {
+    final userBloc = BlocProvider.of<UserBloc>(context);
+    return Padding(
+      padding: myPaddingForm,
+      child: Column(
+        children: [
+          const LabelField(label: 'Nombre de Usuario'),
+          TextFormField(
+            initialValue: '',
+            decoration: textFieldDecoration(hint: 'Escoge un nombre de Usuario', prefixIcon: Icons.person_outline),
+          ),
+          const LabelField(label: 'Escoge una contraseña'),
+          BlocBuilder<UserBloc, UserState>(
+            builder: (context, state) {
+              return TextFormField(
+                initialValue: '',
+                obscureText: state.obscurePassword1,
+                decoration: textFieldDecoration(
+                  hint: 'Contraseña mayor a 8 dígitos',
+                  prefixIcon: Icons.lock_outline,
+                  suffixIcon: state.obscurePassword1 ? Icons.visibility_outlined : Icons.visibility_off_outlined,
+                  onPressedSuffixIcon: () => userBloc.add(TogglePassword1Event()),
+                ),
+              );
+            },
+          ),
+          const LabelField(label: 'Confirma tu contraseña'),
+          BlocBuilder<UserBloc, UserState>(
+            builder: (context, state) {
+              return TextFormField(
+                initialValue: '',
+                obscureText: state.obscurePassword2,
+                decoration: textFieldDecoration(
+                  hint: 'Verifica tu contraseña',
+                  prefixIcon: Icons.lock_outline,
+                  suffixIcon: state.obscurePassword2 ? Icons.visibility_outlined : Icons.visibility_off_outlined,
+                  onPressedSuffixIcon: () => userBloc.add(TogglePassword2Event()),
+                ),
+              );
+            },
+          ),
+          const LabelLink(
+            label1: '¿Ya tienes una contraseña?',
+            label2: 'Ingresar con tu cuenta',
+            nameRoute: 'login',
+          ),
+        ],
+      ),
+    );
   }
 }
