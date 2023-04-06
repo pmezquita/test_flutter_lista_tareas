@@ -24,6 +24,8 @@ class TaskPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final today = DateTime.now();
+    print(DateTime(today.year, today.month + 1, 0));
     final GlobalKey<FormState> formKey = GlobalKey<FormState>();
     final GlobalKey<ScaffoldMessengerState> scaffoldKey = GlobalKey<ScaffoldMessengerState>();
     return ScaffoldMessenger(
@@ -96,7 +98,7 @@ class TaskPage extends StatelessWidget {
                             },
                           ),
                           const LabelField(label: 'Fecha'),
-                          _rowFecha(tarea),
+                          _rowFecha(tarea, context),
                         ],
                       ),
                     ),
@@ -113,63 +115,42 @@ class TaskPage extends StatelessWidget {
     );
   }
 
-  Widget _rowFecha(Task tarea) => Row(
-        children: [
-          Expanded(
-            child: TextFormField(
-              initialValue: tarea.dia?.toString(),
-              enabled: tarea.isEditable,
-              keyboardType: TextInputType.number,
-              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-              decoration: textFieldDecoration(hint: 'Día', enabled: tarea.isEditable),
-              validator: (value) {
-                if (value == null || value.isEmpty) return errorCampoObligatorio;
-
-                return null;
-              },
-              onSaved: (value) {
-                tarea.dia = int.tryParse(value?.toString() ?? '') ?? 1;
-              },
-            ),
+  Widget _rowFecha(Task tarea, BuildContext context) {
+    final date = tarea.isNew ? DateTime.now() : tarea.fecha!;
+    return Row(
+      children: [
+        Expanded(
+          child: DropdownButtonFormField<int>(
+            decoration: textFieldDecoration(enabled: tarea.isEditable),
+            isExpanded: true,
+            items: Task.getDropdownDia(date.year, date.month),
+            value: date.day,
+            onChanged: tarea.isEditable ? (value) => tarea.dia = value : null,
           ),
-          const SizedBox(width: 20.0),
-          Expanded(
-            child: TextFormField(
-              initialValue: tarea.mes?.toString(),
-              enabled: tarea.isEditable,
-              keyboardType: TextInputType.number,
-              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-              decoration: textFieldDecoration(hint: 'Mes', enabled: tarea.isEditable),
-              validator: (value) {
-                if (value == null || value.isEmpty) return errorCampoObligatorio;
-
-                return null;
-              },
-              onSaved: (value) {
-                tarea.mes = int.tryParse(value?.toString() ?? '') ?? 1;
-              },
-            ),
+        ),
+        const SizedBox(width: 20.0),
+        Expanded(
+          child: DropdownButtonFormField<int>(
+            decoration: textFieldDecoration(enabled: tarea.isEditable),
+            isExpanded: true,
+            items: Task.getDropdownMes(),
+            value: date.month,
+            onChanged: tarea.isEditable ? (value) => tarea.mes = value : null,
           ),
-          const SizedBox(width: 20.0),
-          Expanded(
-            child: TextFormField(
-              initialValue: tarea.anio?.toString(),
-              enabled: tarea.isEditable,
-              keyboardType: TextInputType.number,
-              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-              decoration: textFieldDecoration(hint: 'Año', enabled: tarea.isEditable),
-              validator: (value) {
-                if (value == null || value.isEmpty) return errorCampoObligatorio;
-
-                return null;
-              },
-              onSaved: (value) {
-                tarea.anio = int.tryParse(value?.toString() ?? '') ?? 2023;
-              },
-            ),
+        ),
+        const SizedBox(width: 20.0),
+        Expanded(
+          child: DropdownButtonFormField<int>(
+            decoration: textFieldDecoration(enabled: tarea.isEditable),
+            isExpanded: true,
+            items: Task.getDropdownAnio(date.year),
+            value: date.year,
+            onChanged: tarea.isEditable ? (value) => tarea.anio = value : null,
           ),
-        ],
-      );
+        ),
+      ],
+    );
+  }
 
   Widget _getButtonActualizar(
     Task tarea,
