@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import '../../../theme/app_theme.dart';
 
 class AvatarTask extends StatelessWidget {
-  final String imgB64;
+  final String? imgB64;
   final double radius;
   final bool showAlways;
 
@@ -13,11 +13,11 @@ class AvatarTask extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return (imgB64.isNotEmpty)
+    return (imgB64 != null)
         ? CircleAvatar(
             radius: radius,
             backgroundColor: primary60,
-            backgroundImage: MemoryImage(base64Decode(imgB64)),
+            backgroundImage: MemoryImage(base64Decode(imgB64!)),
           )
         : showAlways
             ? CircleAvatar(

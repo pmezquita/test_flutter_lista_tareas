@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lista_tareas/presentation/widgets/global/decoration_field.dart';
 import 'package:lista_tareas/presentation/widgets/task/avatar_task.dart';
 import 'package:lista_tareas/presentation/widgets/task/button_task.dart';
 import 'package:lista_tareas/theme/app_theme.dart';
 
+import '../../helpers/constants.dart';
+import '../../helpers/utils.dart';
 import '../../models/task_model.dart';
 import '../widgets/global/appbar.dart';
 import '../widgets/global/label_field.dart';
@@ -37,7 +40,7 @@ class TaskPage extends StatelessWidget {
                   AvatarTask(imgB64: tarea.imgB64, radius: 70),
                   const SizedBox(height: 10.0),
                   Text(
-                    tarea.imgB64.isEmpty ? 'Click para abrir galería' : 'Click para cambiar imagen',
+                    tarea.imgB64 != null ? 'Click para abrir galería' : 'Click para cambiar imagen',
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontSize: 12),
                   ),
                   Padding(
@@ -54,6 +57,11 @@ class TaskPage extends StatelessWidget {
                               hint: 'Escribe aquí el título de tu tarea',
                               enabled: tarea.isEditable,
                             ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) return errorCampoObligatorio;
+
+                              return null;
+                            },
                           ),
                           const LabelField(label: 'Descripción'),
                           TextFormField(
@@ -65,6 +73,11 @@ class TaskPage extends StatelessWidget {
                               hint: 'Describe cómo será tu tarea',
                               enabled: tarea.isEditable,
                             ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) return errorCampoObligatorio;
+
+                              return null;
+                            },
                           ),
                           const LabelField(label: 'Fecha'),
                           _rowFecha(tarea),
@@ -74,7 +87,7 @@ class TaskPage extends StatelessWidget {
                   ),
                   const Expanded(child: SizedBox.shrink()),
                   _getButtonActualizar(tarea, context),
-                  _getButtonPrincipal(tarea, context),
+                  _getButtonPrincipal(tarea, context, formKey, scaffoldKey),
                 ],
               ),
             ),
@@ -93,6 +106,11 @@ class TaskPage extends StatelessWidget {
               keyboardType: TextInputType.number,
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               decoration: textFieldDecoration(hint: 'Día', enabled: tarea.isEditable),
+              validator: (value) {
+                if (value == null || value.isEmpty) return errorCampoObligatorio;
+
+                return null;
+              },
             ),
           ),
           const SizedBox(width: 20.0),
@@ -103,6 +121,11 @@ class TaskPage extends StatelessWidget {
               keyboardType: TextInputType.number,
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               decoration: textFieldDecoration(hint: 'Mes', enabled: tarea.isEditable),
+              validator: (value) {
+                if (value == null || value.isEmpty) return errorCampoObligatorio;
+
+                return null;
+              },
             ),
           ),
           const SizedBox(width: 20.0),
@@ -113,6 +136,11 @@ class TaskPage extends StatelessWidget {
               keyboardType: TextInputType.number,
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               decoration: textFieldDecoration(hint: 'Año', enabled: tarea.isEditable),
+              validator: (value) {
+                if (value == null || value.isEmpty) return errorCampoObligatorio;
+
+                return null;
+              },
             ),
           ),
         ],
@@ -122,9 +150,43 @@ class TaskPage extends StatelessWidget {
       ? ButtonTaskUpdate(text: 'Actualizar', onPressed: () => Navigator.pop(context))
       : const SizedBox.shrink();
 
-  Widget _getButtonPrincipal(Task tarea, BuildContext context) => tarea.isNew
-      ? ButtonTask(text: 'Crear', icon: Icons.check, onPressed: () => Navigator.pop(context))
-      : tarea.isEditable
-          ? ButtonTask(text: 'Completar Tarea', icon: Icons.check, onPressed: () => Navigator.pop(context))
-          : const SizedBox.shrink();
+  Widget _getButtonPrincipal(
+    Task tarea,
+    BuildContext context,
+    GlobalKey<FormState> formKey,
+    GlobalKey<ScaffoldMessengerState> scaffoldKey,
+  ) =>
+      tarea.isNew
+          ? ButtonTask(text: 'Crear', icon: Icons.check, onPressed: () => _onCrear(tarea, formKey, scaffoldKey))
+          : tarea.isEditable
+              ? ButtonTask(
+                  text: 'Completar Tarea',
+                  icon: Icons.check,
+                  onPressed: () => _onCrear(tarea, formKey, scaffoldKey),
+                )
+              : const SizedBox.shrink();
+
+  void _onCrear(
+    Task tarea,
+    GlobalKey<FormState> formKey,
+    GlobalKey<ScaffoldMessengerState> scaffoldKey,
+  ) async {
+    if (!(formKey.currentState?.validate() ?? false)) {
+      showInSnackBar(scaffoldKey, errorVerificar);
+      return;
+    } else {
+      formKey.currentState?.save();
+      final context = formKey.currentContext!;
+
+      // Crear tarea en la BD
+
+      // Emitir estado
+
+      // Redireccionar a Home
+      if (context.mounted) {
+        //BlocProvider.of<UserBloc>(context).add(SetUserEvent(user));
+        context.pushNamed('home');
+      }
+    }
+  }
 }
