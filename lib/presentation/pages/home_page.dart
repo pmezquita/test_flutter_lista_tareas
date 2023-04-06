@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:lista_tareas/bloc/home/home_bloc.dart';
+import 'package:lista_tareas/db/task_db.dart';
 import 'package:lista_tareas/models/task_model.dart';
-import 'package:lista_tareas/presentation/widgets/home/bottom_navbar.dart';
 import 'package:lista_tareas/presentation/widgets/home/card_task.dart';
 
+import '../../theme/app_theme.dart';
 import '../widgets/global/appbar.dart';
 import '../widgets/home/fab.dart';
 
@@ -12,23 +15,63 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tarea = Task.foo();
-    final list = [tarea, tarea, tarea, tarea, tarea, tarea, tarea, tarea, tarea, tarea];
-
     return Scaffold(
       appBar: const MyAppBar(title: 'Home'),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Fab(onPressed: () => context.pushNamed('taskView', extra: Task())),
-      bottomNavigationBar: const BottomNavbar(selectedIndex: 0),
+      bottomNavigationBar: BlocBuilder<HomeBloc, HomeState>(
+        builder: (context, state) {
+          return BottomNavigationBar(
+            currentIndex: state.selectedIndex,
+            onTap: (index) => BlocProvider.of<HomeBloc>(context).add(SetHomeEvent(index)),
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                label: '',
+                icon: Icon(Icons.text_snippet_outlined, size: sizeIconBottomNavBar),
+                activeIcon: Icon(Icons.text_snippet, size: sizeIconBottomNavBar),
+              ),
+              BottomNavigationBarItem(
+                label: '',
+                icon: Icon(Icons.check, size: sizeIconBottomNavBar),
+                activeIcon: Icon(Icons.check_circle, size: sizeIconBottomNavBar),
+              ),
+            ],
+          );
+        },
+      ),
       body: CustomScrollView(
         slivers: [
-          SliverList(delegate: SliverChildListDelegate(_taskList(list))),
+          BlocBuilder<HomeBloc, HomeState>(
+            builder: (context, state) {
+              return _sliverTaskList(context, state.selectedIndex);
+            },
+          )
         ],
       ),
     );
   }
 }
 
-List<Widget> _taskList(List<Task> tareas) {
-  return tareas.map((e) => CardTask(tarea: e)).toList();
+Widget _sliverTaskList(BuildContext context, int selectedIndex) {
+  final type = selectedIndex == 0 ? 0 : 1;
+  return FutureBuilder<List<Task>?>(
+      future: TaskDb.getTaskType(type),
+      initialData: const [],
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.hasData) {
+          if (snapshot.data is List<Task>) {
+            final tareas = snapshot.data as List<Task>;
+            return SliverList(delegate: SliverChildListDelegate(tareas.map((e) => CardTask(tarea: e)).toList()));
+          }
+          return const SliverToBoxAdapter(child: Center(child: CircularProgressIndicator()));
+        } else {
+          return SliverToBoxAdapter(
+              child: Center(
+            child: Text(
+              'Sin resultados',
+              style: Theme.of(context).textTheme.displaySmall,
+            ),
+          ));
+        }
+      });
 }

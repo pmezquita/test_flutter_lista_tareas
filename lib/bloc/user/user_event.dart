@@ -3,7 +3,6 @@ part of 'user_bloc.dart';
 @immutable
 abstract class UserEvent {}
 
-// TODO: verificar
 class SetInitialUserEvent extends UserEvent{
   SetInitialUserEvent();
 }
