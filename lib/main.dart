@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lista_tareas/bloc/home/home_bloc.dart';
+import 'package:lista_tareas/bloc/task/task_bloc.dart';
 import 'package:lista_tareas/helpers/constants.dart';
 import 'package:lista_tareas/router/my_go_router.dart';
 import 'package:lista_tareas/theme/app_theme.dart';
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (_) => UserBloc()),
         BlocProvider(create: (_) => HomeBloc()),
+        BlocProvider(create: (_) => TaskBloc()),
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,

@@ -26,7 +26,7 @@ class CardTask extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
-                    child: AvatarTask(imgB64: tarea.imgB64, radius: 30, showAlways: false),
+                    child: AvatarTask(img: tarea.img, radius: 30, showAlways: false),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 10.0),

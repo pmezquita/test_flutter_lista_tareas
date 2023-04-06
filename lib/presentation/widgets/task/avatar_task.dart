@@ -1,23 +1,23 @@
-import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 
 import '../../../theme/app_theme.dart';
 
 class AvatarTask extends StatelessWidget {
-  final String? imgB64;
+  final Uint8List? img;
   final double radius;
   final bool showAlways;
 
-  const AvatarTask({Key? key, required this.imgB64, required this.radius, this.showAlways = true}) : super(key: key);
+  const AvatarTask({Key? key, required this.img, required this.radius, this.showAlways = true}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return (imgB64 != null)
+    return (img != null)
         ? CircleAvatar(
             radius: radius,
             backgroundColor: primary60,
-            backgroundImage: MemoryImage(base64Decode(imgB64!)),
+            backgroundImage: MemoryImage(img!),
           )
         : showAlways
             ? CircleAvatar(

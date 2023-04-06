@@ -1,10 +1,11 @@
+import 'dart:typed_data';
+
 import 'package:intl/intl.dart';
 import 'package:lista_tareas/db/task_db.dart';
-import 'package:lista_tareas/helpers/constants.dart';
 
 class Task {
   int? id;
-  String? imgB64;
+  Uint8List? img;
   String? titulo;
   String? descripcion;
   DateTime? fecha;
@@ -21,7 +22,7 @@ class Task {
     this.dia,
     this.mes,
     this.anio,
-    this.imgB64,
+    this.img,
     this.completada = false,
   });
 
@@ -30,7 +31,7 @@ class Task {
     String? descripcion,
     DateTime? fecha,
     int? id,
-    String? imgB64,
+    Uint8List? img,
     bool? completada,
   }) : this(
           id: id,
@@ -40,18 +41,8 @@ class Task {
           dia: fecha?.day,
           mes: fecha?.month,
           anio: fecha?.year,
-          imgB64: imgB64,
+          img: img,
           completada: completada ?? false,
-        );
-
-  Task.foo()
-      : this.fechaDate(
-          id: 1,
-          titulo: 'Enviar documentación',
-          descripcion:
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-          fecha: DateTime.now(),
-          imgB64: fooImg,
         );
 
   String get formatDate => fecha == null ? '- - -' : DateFormat('dd/MM/yy').format(fecha!);
@@ -62,7 +53,7 @@ class Task {
 
   Task copyWith({
     int? id,
-    String? imgB64,
+    Uint8List? img,
     String? titulo,
     String? descripcion,
     DateTime? fecha,
@@ -73,7 +64,7 @@ class Task {
         titulo: titulo ?? this.titulo,
         descripcion: descripcion ?? this.descripcion,
         fecha: fecha ?? this.fecha,
-        imgB64: imgB64 ?? this.imgB64,
+        img: img ?? this.img,
         completada: completada ?? this.completada,
       );
 
@@ -84,6 +75,7 @@ class Task {
           descripcion: map[columnDescripcion],
           fecha: DateTime.parse(map[columnFecha]),
           completada: map[columnCompletada] == 1,
+          img: map[columnImagen],
         );
 
   static List<Task> fromListMap(List<Map<String, dynamic>> maps) {
@@ -96,6 +88,7 @@ class Task {
       columnDescripcion: descripcion,
       columnFecha: fecha?.toIso8601String(),
       columnCompletada: completada ? 1 : 0,
+      columnImagen: img,
     };
     if (id != null) {
       map[columnId] = id;

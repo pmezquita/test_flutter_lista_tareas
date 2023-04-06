@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:lista_tareas/bloc/home/home_bloc.dart';
+import 'package:lista_tareas/bloc/task/task_bloc.dart';
 import 'package:lista_tareas/db/task_db.dart';
 import 'package:lista_tareas/presentation/widgets/global/decoration_field.dart';
 import 'package:lista_tareas/presentation/widgets/task/avatar_task.dart';
@@ -39,11 +41,17 @@ class TaskPage extends StatelessWidget {
               child: Column(
                 children: <Widget>[
                   const SizedBox(height: 30.0),
-                  AvatarTask(imgB64: tarea.imgB64, radius: 70),
+                  BlocBuilder<TaskBloc, TaskState>(
+                    buildWhen: (previous, current) => !current.isLoadingPic,
+                    builder: (context, state) => AvatarTask(img: tarea.img, radius: 70),
+                  ),
                   const SizedBox(height: 10.0),
-                  Text(
-                    tarea.imgB64 != null ? 'Click para abrir galería' : 'Click para cambiar imagen',
-                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontSize: 12),
+                  InkWell(
+                    onTap: () => _onSelectPicture(context),
+                    child: Text(
+                      tarea.img == null ? 'Click para abrir galería' : 'Click para cambiar imagen',
+                      style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontSize: 12),
+                    ),
                   ),
                   Padding(
                     padding: myPaddingForm,
@@ -201,6 +209,18 @@ class TaskPage extends StatelessWidget {
                 ),
               )
             : const SizedBox.shrink();
+  }
+
+  void _onSelectPicture(BuildContext context) async {
+    BlocProvider.of<TaskBloc>(context).add(SetIsLoadingPicEvent(true));
+    final ImagePicker imagePicker = ImagePicker();
+    final XFile? photo = await imagePicker.pickImage(source: ImageSource.gallery);
+    if (photo != null) {
+      tarea.img = await photo.readAsBytes();
+    }
+    if (context.mounted) {
+      BlocProvider.of<TaskBloc>(context).add(SetIsLoadingPicEvent(false));
+    }
   }
 
   void _onCreateUpdate({
