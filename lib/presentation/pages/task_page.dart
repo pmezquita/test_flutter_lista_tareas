@@ -117,6 +117,7 @@ class TaskPage extends StatelessWidget {
 
   Widget _rowFecha(Task tarea, BuildContext context) {
     final date = tarea.isNew ? DateTime.now() : tarea.fecha!;
+    // TODO: emitir estados para acualizar el ultimo día al seleccionar un mes o año diferente
     return Row(
       children: [
         Expanded(
