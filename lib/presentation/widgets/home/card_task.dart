@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lista_tareas/presentation/widgets/task/avatar_task.dart';
 import 'package:lista_tareas/theme/app_theme.dart';
 
+import '../../../bloc/home/home_bloc.dart';
+import '../../../db/task_db.dart';
 import '../../../models/task_model.dart';
 import '../global/alertdialog_2_option.dart';
 
@@ -69,6 +72,16 @@ class CardTask extends StatelessWidget {
             title: '¿Seguro que quieres eliminar ésta tarea?',
             content: 'No podrás recuperar las tareas eliminadas',
             onPressed1Opt: () => Navigator.pop(context),
-            onPressed2Opt: () => Navigator.pop(context),
+            onPressed2Opt: () async {
+              // Eliminar task de DB
+              await TaskDb.delete(tarea.id!);
+
+              if (context.mounted) {
+                // Emitir estado
+                BlocProvider.of<HomeBloc>(context).add(SetHomeEvent(tarea.completada ? 1 : 0));
+                // cerrar alert
+                Navigator.pop(context);
+              }
+            },
           ));
 }
