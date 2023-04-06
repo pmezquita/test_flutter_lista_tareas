@@ -16,7 +16,7 @@ class AvatarTask extends StatelessWidget {
     return (img != null)
         ? CircleAvatar(
             radius: radius,
-            backgroundColor: primary60,
+            backgroundColor: Colors.transparent,
             backgroundImage: MemoryImage(img!),
           )
         : showAlways
