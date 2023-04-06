@@ -94,7 +94,7 @@ class TaskPage extends StatelessWidget {
                     ),
                   ),
                   const Expanded(child: SizedBox.shrink()),
-                  _getButtonActualizar(tarea, context),
+                  _getButtonActualizar(tarea, context, formKey, scaffoldKey),
                   _getButtonPrincipal(tarea, context, formKey, scaffoldKey),
                 ],
               ),
@@ -163,31 +163,52 @@ class TaskPage extends StatelessWidget {
         ],
       );
 
-  Widget _getButtonActualizar(Task tarea, BuildContext context) => (!tarea.isNew && tarea.isEditable)
-      ? ButtonTaskUpdate(text: 'Actualizar', onPressed: () => Navigator.pop(context))
-      : const SizedBox.shrink();
+  Widget _getButtonActualizar(
+    Task tarea,
+    BuildContext context,
+    GlobalKey<FormState> formKey,
+    GlobalKey<ScaffoldMessengerState> scaffoldKey,
+  ) {
+    return (!tarea.isNew && tarea.isEditable)
+        ? ButtonTaskUpdate(
+            text: 'Actualizar',
+            onPressed: () => _onCreateUpdate(tarea: tarea, formKey: formKey, scaffoldKey: scaffoldKey),
+          )
+        : const SizedBox.shrink();
+  }
 
   Widget _getButtonPrincipal(
     Task tarea,
     BuildContext context,
     GlobalKey<FormState> formKey,
     GlobalKey<ScaffoldMessengerState> scaffoldKey,
-  ) =>
-      tarea.isNew
-          ? ButtonTask(text: 'Crear', icon: Icons.check, onPressed: () => _onCrear(tarea, formKey, scaffoldKey))
-          : tarea.isEditable
-              ? ButtonTask(
-                  text: 'Completar Tarea',
-                  icon: Icons.check,
-                  onPressed: () => _onCrear(tarea, formKey, scaffoldKey),
-                )
-              : const SizedBox.shrink();
+  ) {
+    return tarea.isNew
+        ? ButtonTask(
+            text: 'Crear',
+            icon: Icons.check,
+            onPressed: () => _onCreateUpdate(tarea: tarea, formKey: formKey, scaffoldKey: scaffoldKey),
+          )
+        : tarea.isEditable
+            ? ButtonTask(
+                text: 'Completar Tarea',
+                icon: Icons.check,
+                onPressed: () => _onCreateUpdate(
+                  tarea: tarea,
+                  formKey: formKey,
+                  scaffoldKey: scaffoldKey,
+                  markCompleted: true,
+                ),
+              )
+            : const SizedBox.shrink();
+  }
 
-  void _onCrear(
-    Task tarea,
-    GlobalKey<FormState> formKey,
-    GlobalKey<ScaffoldMessengerState> scaffoldKey,
-  ) async {
+  void _onCreateUpdate({
+    required Task tarea,
+    required GlobalKey<FormState> formKey,
+    required GlobalKey<ScaffoldMessengerState> scaffoldKey,
+    bool markCompleted = false,
+  }) async {
     if (!(formKey.currentState?.validate() ?? false)) {
       showInSnackBar(scaffoldKey, errorVerificar);
       return;
@@ -197,9 +218,17 @@ class TaskPage extends StatelessWidget {
 
       // Crear tarea en la BD
       tarea.fecha = DateTime(tarea.anio ?? 2023, tarea.mes ?? 1, tarea.dia ?? 1);
-      if ((await TaskDb.insert(tarea)) == 0) {
-        showInSnackBar(scaffoldKey, 'Error creando tarea');
-        return;
+      if (tarea.isNew) {
+        if ((await TaskDb.insert(tarea)) == 0) {
+          showInSnackBar(scaffoldKey, 'Error creando tarea');
+          return;
+        }
+      } else {
+        tarea.completada = markCompleted;
+        if ((await TaskDb.update(tarea)) == 0) {
+          showInSnackBar(scaffoldKey, 'Error acrualizando tarea');
+          return;
+        }
       }
 
       // Emitir estado y Redireccionar a Home
