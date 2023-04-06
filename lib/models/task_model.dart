@@ -3,15 +3,15 @@ import 'package:lista_tareas/db/task_db.dart';
 import 'package:lista_tareas/helpers/constants.dart';
 
 class Task {
-  final int? id;
-  final String? imgB64;
-  final String? titulo;
-  final String? descripcion;
-  final DateTime? fecha;
-  final int? dia;
-  final int? mes;
-  final int? anio;
-  final bool completada;
+  int? id;
+  String? imgB64;
+  String? titulo;
+  String? descripcion;
+  DateTime? fecha;
+  int? dia;
+  int? mes;
+  int? anio;
+  bool completada;
 
   Task({
     this.id,
@@ -83,7 +83,7 @@ class Task {
           titulo: map[columnTitulo],
           descripcion: map[columnDescripcion],
           fecha: DateTime.parse(map[columnFecha]),
-          completada: map[columnCompletada],
+          completada: map[columnCompletada] == 1,
         );
 
   static List<Task> fromListMap(List<Map<String, dynamic>> maps) {
@@ -94,8 +94,8 @@ class Task {
     Map<String, dynamic> map = <String, dynamic>{
       columnTitulo: titulo,
       columnDescripcion: descripcion,
-      columnFecha: fecha,
-      columnCompletada: completada,
+      columnFecha: fecha?.toIso8601String(),
+      columnCompletada: completada ? 1 : 0,
     };
     if (id != null) {
       map[columnId] = id;

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lista_tareas/bloc/home/home_bloc.dart';
+import 'package:lista_tareas/db/task_db.dart';
 import 'package:lista_tareas/presentation/widgets/global/decoration_field.dart';
 import 'package:lista_tareas/presentation/widgets/task/avatar_task.dart';
 import 'package:lista_tareas/presentation/widgets/task/button_task.dart';
@@ -62,6 +64,9 @@ class TaskPage extends StatelessWidget {
 
                               return null;
                             },
+                            onSaved: (value) {
+                              tarea.titulo = value;
+                            },
                           ),
                           const LabelField(label: 'Descripción'),
                           TextFormField(
@@ -77,6 +82,9 @@ class TaskPage extends StatelessWidget {
                               if (value == null || value.isEmpty) return errorCampoObligatorio;
 
                               return null;
+                            },
+                            onSaved: (value) {
+                              tarea.descripcion = value;
                             },
                           ),
                           const LabelField(label: 'Fecha'),
@@ -111,6 +119,9 @@ class TaskPage extends StatelessWidget {
 
                 return null;
               },
+              onSaved: (value) {
+                tarea.dia = int.tryParse(value?.toString() ?? '') ?? 1;
+              },
             ),
           ),
           const SizedBox(width: 20.0),
@@ -126,6 +137,9 @@ class TaskPage extends StatelessWidget {
 
                 return null;
               },
+              onSaved: (value) {
+                tarea.mes = int.tryParse(value?.toString() ?? '') ?? 1;
+              },
             ),
           ),
           const SizedBox(width: 20.0),
@@ -140,6 +154,9 @@ class TaskPage extends StatelessWidget {
                 if (value == null || value.isEmpty) return errorCampoObligatorio;
 
                 return null;
+              },
+              onSaved: (value) {
+                tarea.anio = int.tryParse(value?.toString() ?? '') ?? 2023;
               },
             ),
           ),
@@ -179,13 +196,16 @@ class TaskPage extends StatelessWidget {
       final context = formKey.currentContext!;
 
       // Crear tarea en la BD
+      tarea.fecha = DateTime(tarea.anio ?? 2023, tarea.mes ?? 1, tarea.dia ?? 1);
+      if ((await TaskDb.insert(tarea)) == 0) {
+        showInSnackBar(scaffoldKey, 'Error creando tarea');
+        return;
+      }
 
-      // Emitir estado
-
-      // Redireccionar a Home
+      // Emitir estado y Redireccionar a Home
       if (context.mounted) {
-        //BlocProvider.of<UserBloc>(context).add(SetUserEvent(user));
-        context.pushNamed('home');
+        BlocProvider.of<HomeBloc>(context).add(SetHomeEvent(0));
+        Navigator.pop(context);
       }
     }
   }
