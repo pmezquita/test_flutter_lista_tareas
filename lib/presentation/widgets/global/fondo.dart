@@ -11,11 +11,11 @@ class Fondo extends StatelessWidget {
       {Key? key, required this.color1, required this.color2, required this.color3, required this.maxHeight})
       : super(key: key);
 
-  const Fondo.primary({Key? key})
-      : this._base(color1: primary40, color2: primary60, color3: primary90, maxHeight: 250, key: key);
+  const Fondo.primary({Key? key, required double height})
+      : this._base(color1: primary40, color2: primary60, color3: primary90, maxHeight: height, key: key);
 
-  const Fondo.secondary({Key? key})
-      : this._base(color1: secondary40, color2: secondary60, color3: secondary90, maxHeight: 250, key: key);
+  const Fondo.secondary({Key? key, required double height})
+      : this._base(color1: secondary40, color2: secondary60, color3: secondary90, maxHeight: height, key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -31,7 +31,7 @@ class SinginPage extends StatelessWidget {
             key: formKey,
             child: Column(
               children: <Widget>[
-                const Fondo.secondary(),
+                const Fondo.secondary(height: 250),
                 Text(
                   'Crear una Cuenta',
                   style: Theme.of(context).textTheme.headlineLarge,
