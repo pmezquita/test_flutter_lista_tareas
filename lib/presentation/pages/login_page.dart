@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:lista_tareas/bloc/user/user_bloc.dart';
 import 'package:lista_tareas/helpers/constants.dart';
 import 'package:lista_tareas/models/user_model.dart';
+import 'package:lista_tareas/presentation/widgets/global/alertdialog_error.dart';
 import 'package:lista_tareas/presentation/widgets/global/decoration_field.dart';
 import 'package:lista_tareas/presentation/widgets/global/label_link.dart';
 import 'package:lista_tareas/presentation/widgets/global/fondo.dart';
@@ -12,7 +13,6 @@ import 'package:lista_tareas/presentation/widgets/login/button_login_singin.dart
 import 'package:lista_tareas/theme/app_theme.dart';
 
 import '../../db/user_db.dart';
-import '../../helpers/utils.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -21,36 +21,32 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final tema = Theme.of(context).textTheme;
     final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-    final GlobalKey<ScaffoldMessengerState> scaffoldKey = GlobalKey<ScaffoldMessengerState>();
     UserModel user = UserModel();
 
-    return ScaffoldMessenger(
-      key: scaffoldKey,
-      child: Scaffold(
-          body: CustomScrollView(
-        slivers: [
-          SliverFillRemaining(
-            hasScrollBody: false,
-            child: Form(
-              key: formKey,
-              child: Column(
-                children: <Widget>[
-                  const Fondo.primary(),
-                  const SizedBox(height: 40.0),
-                  Text(
-                    'Iniciar Sesión',
-                    style: tema.headlineLarge,
-                  ),
-                  _formulario(context, user),
-                  const Expanded(child: SizedBox.shrink()),
-                  ButtonLoginSingin(text: 'Continuar', onPressed: () => _submit(formKey, scaffoldKey, user)),
-                ],
-              ),
+    return Scaffold(
+        body: CustomScrollView(
+      slivers: [
+        SliverFillRemaining(
+          hasScrollBody: false,
+          child: Form(
+            key: formKey,
+            child: Column(
+              children: <Widget>[
+                const Fondo.primary(),
+                const SizedBox(height: 40.0),
+                Text(
+                  'Iniciar Sesión',
+                  style: tema.headlineLarge,
+                ),
+                _formulario(context, user),
+                const Expanded(child: SizedBox.shrink()),
+                ButtonLoginSingin(text: 'Continuar', onPressed: () => _submit(formKey, user)),
+              ],
             ),
           ),
-        ],
-      )),
-    );
+        ),
+      ],
+    ));
   }
 
   Widget _formulario(BuildContext context, UserModel user) {
@@ -108,11 +104,9 @@ class LoginPage extends StatelessWidget {
 
   void _submit(
     GlobalKey<FormState> formKey,
-    GlobalKey<ScaffoldMessengerState> scaffoldKey,
     UserModel user,
   ) async {
     if (!(formKey.currentState?.validate() ?? false)) {
-      showInSnackBar(scaffoldKey, errorVerificar);
       return;
     } else {
       formKey.currentState?.save();
@@ -121,7 +115,11 @@ class LoginPage extends StatelessWidget {
       // Verificar credenciales
       final idUser = await UserDb.isValid(user.username, user.password);
       if (idUser == 0) {
-        showInSnackBar(scaffoldKey, 'Usuario y/o contraseña incorrecto');
+        if (context.mounted) {
+          showDialog<String>(
+              context: context,
+              builder: (BuildContext context) => const AlertDialogError(msg: 'Usuario y/o contraseña incorrecto'));
+        }
         return;
       }
 

@@ -11,8 +11,8 @@ import 'package:lista_tareas/theme/app_theme.dart';
 
 import '../../bloc/user/user_bloc.dart';
 import '../../helpers/constants.dart';
-import '../../helpers/utils.dart';
 import '../../models/user_model.dart';
+import '../widgets/global/alertdialog_error.dart';
 
 class SinginPage extends StatelessWidget {
   const SinginPage({Key? key}) : super(key: key);
@@ -20,38 +20,33 @@ class SinginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-    final GlobalKey<ScaffoldMessengerState> scaffoldKey = GlobalKey<ScaffoldMessengerState>();
     UserModel user = UserModel();
 
-    return ScaffoldMessenger(
-      key: scaffoldKey,
-      child: Scaffold(
-          body: CustomScrollView(
-        slivers: [
-          SliverFillRemaining(
-            hasScrollBody: false,
-            child: Form(
-              key: formKey,
-              child: Column(
-                children: <Widget>[
-                  const Fondo.secondary(),
-                  const SizedBox(height: 40.0),
-                  Text(
-                    'Crear una Cuenta',
-                    style: Theme.of(context).textTheme.headlineLarge,
-                  ),
-                  const SizedBox(height: 5.0),
-                  _formulario(context, user),
-                  const Expanded(child: SizedBox.shrink()),
-                  ButtonLoginSingin(
-                      text: 'Continuar', isPrimary: false, onPressed: () => _submit(formKey, scaffoldKey, user)),
-                ],
-              ),
+    return Scaffold(
+        body: CustomScrollView(
+      slivers: [
+        SliverFillRemaining(
+          hasScrollBody: false,
+          child: Form(
+            key: formKey,
+            child: Column(
+              children: <Widget>[
+                const Fondo.secondary(),
+                const SizedBox(height: 40.0),
+                Text(
+                  'Crear una Cuenta',
+                  style: Theme.of(context).textTheme.headlineLarge,
+                ),
+                const SizedBox(height: 5.0),
+                _formulario(context, user),
+                const Expanded(child: SizedBox.shrink()),
+                ButtonLoginSingin(text: 'Continuar', isPrimary: false, onPressed: () => _submit(formKey, user)),
+              ],
             ),
           ),
-        ],
-      )),
-    );
+        ),
+      ],
+    ));
   }
 
   Widget _formulario(BuildContext context, UserModel user) {
@@ -137,25 +132,30 @@ class SinginPage extends StatelessWidget {
 
   void _submit(
     GlobalKey<FormState> formKey,
-    GlobalKey<ScaffoldMessengerState> scaffoldKey,
     UserModel user,
   ) async {
     final context = formKey.currentContext!;
     if (!(formKey.currentState?.validate() ?? false)) {
-      showInSnackBar(scaffoldKey, errorVerificar);
       return;
     } else {
       formKey.currentState?.save();
 
       // Verificar que no exista el usuario en la BD
       if (await UserDb.existByUsername(user.username)) {
-        showInSnackBar(scaffoldKey, 'Usuario ya existe');
+        if (context.mounted) {
+          showDialog<String>(
+              context: context, builder: (BuildContext context) => const AlertDialogError(msg: 'Usuario ya existe'));
+        }
         return;
       }
       // TODO: implementar encriptado
       // Crear nuevo usuario
       if ((await UserDb.insert(user)).id == null) {
-        showInSnackBar(scaffoldKey, 'Error creando usuario');
+        if (context.mounted) {
+          showDialog<String>(
+              context: context,
+              builder: (BuildContext context) => const AlertDialogError(msg: 'Error creando usuario'));
+        }
         return;
       }
 

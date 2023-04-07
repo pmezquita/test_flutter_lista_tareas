@@ -22,55 +22,28 @@ class AlertDialog2Opt extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tema = Theme.of(context).textTheme;
     return AlertDialog(
-      backgroundColor: primary90,
-      title: Text(title, style: tema.bodyMedium, textAlign: TextAlign.center),
-      content: Text(content, style: tema.headlineMedium, textAlign: TextAlign.center),
+      title: Text(title, textAlign: TextAlign.center),
+      content: Text(content, textAlign: TextAlign.center),
       actions: <Widget>[
         Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Expanded(child: _ButtonAlert(isPrimary: false, text: 'No', onPressed: onPressed1Opt)),
-            Expanded(child: _ButtonAlert(text: 'Sí', onPressed: onPressed2Opt)),
+            Expanded(
+                child: ElevatedButton(
+              onPressed: onPressed1Opt,
+              style: ElevatedButton.styleFrom(
+                foregroundColor: secondary40,
+                backgroundColor: Colors.white,
+                side: const BorderSide(color: secondary40),
+              ),
+              child: const Text('No'),
+            )),
+            const SizedBox(width: 30.0),
+            Expanded(child: ElevatedButton(onPressed: onPressed2Opt, child: const Text('Sí'))),
           ],
         ),
       ],
-    );
-  }
-}
-
-class _ButtonAlert extends StatelessWidget {
-  final String text;
-  final bool isPrimary;
-  final VoidCallback? onPressed;
-
-  const _ButtonAlert({
-    Key? key,
-    required this.text,
-    this.isPrimary = true,
-    this.onPressed,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final textStyle = isPrimary
-        ? Theme.of(context).textTheme.displaySmall?.copyWith(color: Colors.white)
-        : Theme.of(context).textTheme.displaySmall;
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-      child: ElevatedButton(
-        onPressed: onPressed,
-        style: isPrimary
-            ? Theme.of(context).elevatedButtonTheme.style
-            : ElevatedButton.styleFrom(
-                textStyle: textStyle,
-                foregroundColor: secondary40,
-                backgroundColor: secondary90,
-                side: const BorderSide(color: secondary40),
-              ),
-        child: Text(text, style: textStyle),
-      ),
     );
   }
 }

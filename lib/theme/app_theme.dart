@@ -65,7 +65,8 @@ class AppTheme {
               shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(12.0))),
               backgroundColor: primary40,
               foregroundColor: Colors.white,
-              textStyle: const TextStyle(
+              textStyle:  TextStyle(
+                fontFamily: GoogleFonts.poppins().fontFamily,
                 color: Colors.white,
                 fontSize: 15.0,
                 fontWeight: FontWeight.w600,
@@ -96,6 +97,12 @@ class AppTheme {
             return primary40;
           }),
           suffixIconColor: MaterialStateColor.resolveWith((states) => primary40),
+        ),
+        dialogTheme: const DialogTheme(
+          backgroundColor: primary90,
+          titleTextStyle: TextStyle(color: primary20, fontSize: 14.0, fontWeight: FontWeight.w400),
+          contentTextStyle: TextStyle(color: primary40, fontSize: 14.0, fontWeight: FontWeight.w400),
+          actionsPadding: EdgeInsets.only(left: 20.0,right: 20.0, bottom: 20.0),
         ),
         progressIndicatorTheme: const ProgressIndicatorThemeData(color: secondary40),
       );
