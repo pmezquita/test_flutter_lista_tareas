@@ -12,7 +12,7 @@ import 'package:lista_tareas/theme/app_theme.dart';
 import '../../helpers/constants.dart';
 import '../../models/task_model.dart';
 import '../widgets/global/alertdialog_error.dart';
-import '../widgets/global/appbar.dart';
+import '../widgets/global/fondo.dart';
 import '../widgets/global/label_field.dart';
 import '../widgets/task/button_task_update.dart';
 
@@ -26,10 +26,16 @@ class TaskPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final GlobalKey<FormState> formKey = GlobalKey<FormState>();
     return Scaffold(
-      appBar: MyAppBar(
-        title: 'New Task',
-        showBack: true,
-        onPressedBack: () => Navigator.pop(context),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(100),
+        child: AppBar(
+          flexibleSpace: Fondo.primary(height: 200),
+          title: tarea.completada ? Text('Complete Task') : Text('New Task'),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios),
+            onPressed: () => Navigator.pop(context),
+          ),
+        ),
       ),
       body: CustomScrollView(
         slivers: [
@@ -200,6 +206,7 @@ class TaskPage extends StatelessWidget {
                   ),
                 ],
               ),
+              SizedBox(height: 25.0),
             ],
           )
         : const SizedBox.shrink();

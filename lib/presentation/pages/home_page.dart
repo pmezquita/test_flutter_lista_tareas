@@ -7,7 +7,7 @@ import 'package:lista_tareas/models/task_model.dart';
 import 'package:lista_tareas/presentation/widgets/home/card_task.dart';
 
 import '../../theme/app_theme.dart';
-import '../widgets/global/appbar.dart';
+import '../widgets/global/fondo.dart';
 import '../widgets/home/fab.dart';
 
 class HomePage extends StatelessWidget {
@@ -21,7 +21,14 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const MyAppBar(title: 'Home'),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(100),
+        child: AppBar(
+          leading: const SizedBox.shrink(),
+          flexibleSpace: Fondo.primary(height: 200),
+          title: Text('Home'),
+        ),
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton:
           Fab(onPressed: () => context.pushNamed('taskView', extra: Task(), params: {'idUser': idUser})),

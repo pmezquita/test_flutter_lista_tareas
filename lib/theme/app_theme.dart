@@ -41,9 +41,16 @@ class AppTheme {
           labelSmall: const TextStyle(color: primary20, fontSize: 14.0, fontWeight: FontWeight.w700),
           displaySmall: const TextStyle(color: secondary40, fontSize: 15.0, fontWeight: FontWeight.w600),
         ),
-        appBarTheme: const AppBarTheme(
+        appBarTheme: AppBarTheme(
           centerTitle: true,
-          backgroundColor: primary40,
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          titleTextStyle: TextStyle(
+            fontFamily: GoogleFonts.poppins().fontFamily,
+            color: Colors.white,
+            fontSize: 24.0,
+            fontWeight: FontWeight.w500,
+          ),
         ),
         cardTheme: const CardTheme(
           color: primary90,
@@ -65,7 +72,7 @@ class AppTheme {
               shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(12.0))),
               backgroundColor: primary40,
               foregroundColor: Colors.white,
-              textStyle:  TextStyle(
+              textStyle: TextStyle(
                 fontFamily: GoogleFonts.poppins().fontFamily,
                 color: Colors.white,
                 fontSize: 15.0,
@@ -102,7 +109,7 @@ class AppTheme {
           backgroundColor: primary90,
           titleTextStyle: TextStyle(color: primary20, fontSize: 14.0, fontWeight: FontWeight.w400),
           contentTextStyle: TextStyle(color: primary40, fontSize: 14.0, fontWeight: FontWeight.w400),
-          actionsPadding: EdgeInsets.only(left: 20.0,right: 20.0, bottom: 20.0),
+          actionsPadding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
         ),
         progressIndicatorTheme: const ProgressIndicatorThemeData(color: secondary40),
       );
