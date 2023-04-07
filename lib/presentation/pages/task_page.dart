@@ -100,6 +100,7 @@ class TaskPage extends StatelessWidget {
                           ),
                           const LabelField(label: 'Fecha'),
                           _rowFecha(tarea, context),
+                          _rowFechaCompleted(tarea, context),
                         ],
                       ),
                     ),
@@ -164,6 +165,47 @@ class TaskPage extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  Widget _rowFechaCompleted(Task tarea, BuildContext context) {
+    return tarea.completada ? Column(
+      children: [
+        const LabelField(label: 'Fecha de término'),
+        Row(
+          children: [
+            Expanded(
+              child: TextFormField(
+                initialValue: tarea.fechaCompleted?.day.toString(),
+                enabled: false,
+                decoration: textFieldDecoration(
+                  enabled: false,
+                ),
+              ),
+            ),
+            const SizedBox(width: 20.0),
+            Expanded(
+              child: TextFormField(
+                initialValue: Task.mesesMap[tarea.fechaCompleted?.month],
+                enabled: false,
+                decoration: textFieldDecoration(
+                  enabled: false,
+                ),
+              ),
+            ),
+            const SizedBox(width: 20.0),
+            Expanded(
+              child: TextFormField(
+                initialValue: tarea.fechaCompleted?.year.toString(),
+                enabled: false,
+                decoration: textFieldDecoration(
+                  enabled: false,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
+    ) : const SizedBox.shrink();
   }
 
   Widget _getButtonActualizar(
@@ -232,7 +274,7 @@ class TaskPage extends StatelessWidget {
       final context = formKey.currentContext!;
 
       // Crear tarea en la BD
-      tarea.fecha = DateTime(tarea.anio ?? 2023, tarea.mes ?? 1, tarea.dia ?? 1);
+      tarea.fecha = DateTime(tarea.anio!, tarea.mes!, tarea.dia!);
       if (tarea.isNew) {
         tarea.createdBy = int.tryParse(idUser);
         if ((await TaskDb.insert(tarea)) == 0) {

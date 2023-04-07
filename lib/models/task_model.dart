@@ -125,21 +125,27 @@ class Task {
   }
 
   static List<DropdownMenuItem<int>> getDropdownMes() {
-    return const [
-      DropdownMenuItem(value: 1, child: Text('Enero')),
-      DropdownMenuItem(value: 2, child: Text('Febrero')),
-      DropdownMenuItem(value: 3, child: Text('Marzo')),
-      DropdownMenuItem(value: 4, child: Text('Abril')),
-      DropdownMenuItem(value: 5, child: Text('Mayo')),
-      DropdownMenuItem(value: 6, child: Text('Junio')),
-      DropdownMenuItem(value: 7, child: Text('Julio')),
-      DropdownMenuItem(value: 8, child: Text('Agosto')),
-      DropdownMenuItem(value: 9, child: Text('Septiembre')),
-      DropdownMenuItem(value: 10, child: Text('Octubre')),
-      DropdownMenuItem(value: 11, child: Text('Noviembre')),
-      DropdownMenuItem(value: 12, child: Text('Diciembre')),
-    ];
+    List<DropdownMenuItem<int>> list = [];
+    mesesMap.forEach((key, value) {
+      list.add(DropdownMenuItem(value: key, child: Text(value)));
+    });
+    return list;
   }
+
+  static const mesesMap = {
+    1: 'Enero',
+    2: 'Febrero',
+    3: 'Marzo',
+    4: 'Abril',
+    5: 'Mayo',
+    6: 'Junio',
+    7: 'Julio',
+    8: 'Agosto',
+    9: 'Septiembre',
+    10: 'Octubre',
+    11: 'Noviembre',
+    12: 'Diciembre',
+  };
 
   static List<DropdownMenuItem<int>> getDropdownAnio(int year) {
     final currentYear = DateTime.now().year;
