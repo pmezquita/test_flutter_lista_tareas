@@ -35,6 +35,8 @@ class TaskDb {
     return null;
   }
 
+  // TODO: que las task sean por usuario
+
   static Future<List<Task>?> getTaskType(int completada) async {
     final db = await DBProvider.db.database;
     List<Map<String, dynamic>> maps =
