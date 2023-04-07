@@ -32,7 +32,6 @@ class SinginPage extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 const Fondo.secondary(),
-                const SizedBox(height: 40.0),
                 Text(
                   'Crear una Cuenta',
                   style: Theme.of(context).textTheme.headlineLarge,

@@ -33,7 +33,6 @@ class LoginPage extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 const Fondo.primary(),
-                const SizedBox(height: 40.0),
                 Text(
                   'Iniciar Sesión',
                   style: tema.headlineLarge,

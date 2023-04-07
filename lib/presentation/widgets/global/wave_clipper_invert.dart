@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 
-class WaveClipper extends CustomClipper<Path> {
+class WaveClipperInvert extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     var path = Path();
 
     path.lineTo(0, size.height - (size.height / 4));
 
-    var firstStart = Offset(size.width / 4, size.height- (size.height/10));
+    var firstStart = Offset(size.width / 4, size.height - (size.height / 2));
+    // var firstStart = Offset(size.width / 4, size.height);
     var firstEnd = Offset(size.width / 2, size.height - (size.height / 4));
     path.quadraticBezierTo(firstStart.dx, firstStart.dy, firstEnd.dx, firstEnd.dy);
 
-    var secondStart = Offset(size.width - (size.width / 4), size.height - (size.height / 2.5));
+    // var secondStart = Offset(size.width - (size.width / 4), size.height - (size.height / 2));
+    var secondStart = Offset(size.width - (size.width / 4), size.height);
     var secondEnd = Offset(size.width, size.height - (size.height / 4));
     path.quadraticBezierTo(secondStart.dx, secondStart.dy, secondEnd.dx, secondEnd.dy);
 
