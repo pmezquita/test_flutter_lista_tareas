@@ -28,12 +28,12 @@ class HomePage extends StatelessWidget {
               BottomNavigationBarItem(
                 label: '',
                 icon: Icon(Icons.text_snippet_outlined, size: sizeIconBottomNavBar),
-                activeIcon: Icon(Icons.text_snippet, size: sizeIconBottomNavBar),
+                activeIcon: Icon(Icons.text_snippet, size: sizeIconBottomNavBarSelected),
               ),
               BottomNavigationBarItem(
                 label: '',
                 icon: Icon(Icons.check, size: sizeIconBottomNavBar),
-                activeIcon: Icon(Icons.check_circle, size: sizeIconBottomNavBar),
+                activeIcon: Icon(Icons.check_circle, size: sizeIconBottomNavBarSelected),
               ),
             ],
           );

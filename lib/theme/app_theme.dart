@@ -13,6 +13,7 @@ const Color secondary60 = Color(0xffFFD6AD);
 const Color secondary90 = Color(0xffFFF1E4);
 
 const sizeIconBottomNavBar = 30.0;
+const sizeIconBottomNavBarSelected = 40.0;
 
 const paddingLabel = EdgeInsets.only(top: 20, bottom: 14);
 const myPaddingForm = EdgeInsets.symmetric(horizontal: 13.0);
