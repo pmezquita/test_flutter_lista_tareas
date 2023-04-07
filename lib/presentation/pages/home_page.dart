@@ -11,14 +11,20 @@ import '../widgets/global/appbar.dart';
 import '../widgets/home/fab.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+  final String idUser;
+
+  const HomePage({Key? key, this.idUser = '0'})
+      : super(
+          key: key,
+        );
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const MyAppBar(title: 'Home'),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: Fab(onPressed: () => context.pushNamed('taskView', extra: Task())),
+      floatingActionButton:
+          Fab(onPressed: () => context.pushNamed('taskView', extra: Task(), params: {'idUser': idUser})),
       bottomNavigationBar: BlocBuilder<HomeBloc, HomeState>(
         builder: (context, state) {
           return BottomNavigationBar(
@@ -50,28 +56,28 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
-}
 
-Widget _sliverTaskList(BuildContext context, int selectedIndex) {
-  final type = selectedIndex == 0 ? 0 : 1;
-  return FutureBuilder<List<Task>?>(
-      future: TaskDb.getTaskType(type),
-      initialData: const [],
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.hasData) {
-          if (snapshot.data is List<Task>) {
-            final tareas = snapshot.data as List<Task>;
-            return SliverList(delegate: SliverChildListDelegate(tareas.map((e) => CardTask(tarea: e)).toList()));
+  Widget _sliverTaskList(BuildContext context, int selectedIndex) {
+    final type = selectedIndex == 0 ? 0 : 1;
+    return FutureBuilder<List<Task>?>(
+        future: TaskDb.getTaskType(type, int.tryParse(idUser)),
+        initialData: const [],
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.hasData) {
+            if (snapshot.data is List<Task>?) {
+              final tareas = snapshot.data as List<Task>;
+              return SliverList(delegate: SliverChildListDelegate(tareas.map((e) => CardTask(tarea: e)).toList()));
+            }
+            return const SliverToBoxAdapter(child: Center(child: CircularProgressIndicator()));
+          } else {
+            return SliverToBoxAdapter(
+                child: Center(
+              child: Text(
+                'Sin resultados',
+                style: Theme.of(context).textTheme.displaySmall,
+              ),
+            ));
           }
-          return const SliverToBoxAdapter(child: Center(child: CircularProgressIndicator()));
-        } else {
-          return SliverToBoxAdapter(
-              child: Center(
-            child: Text(
-              'Sin resultados',
-              style: Theme.of(context).textTheme.displaySmall,
-            ),
-          ));
-        }
-      });
+        });
+  }
 }

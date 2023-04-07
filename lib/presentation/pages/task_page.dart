@@ -19,8 +19,9 @@ import '../widgets/task/button_task_update.dart';
 
 class TaskPage extends StatelessWidget {
   final Task tarea;
+  final String idUser;
 
-  const TaskPage({Key? key, required this.tarea}) : super(key: key);
+  const TaskPage({Key? key, required this.tarea, this.idUser = '0'}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -233,12 +234,14 @@ class TaskPage extends StatelessWidget {
       // Crear tarea en la BD
       tarea.fecha = DateTime(tarea.anio ?? 2023, tarea.mes ?? 1, tarea.dia ?? 1);
       if (tarea.isNew) {
+        tarea.createdBy = int.tryParse(idUser);
         if ((await TaskDb.insert(tarea)) == 0) {
           showInSnackBar(scaffoldKey, 'Error creando tarea');
           return;
         }
       } else {
-        tarea.completada = markCompleted;
+        if (markCompleted) tarea.setCompleted();
+
         if ((await TaskDb.update(tarea)) == 0) {
           showInSnackBar(scaffoldKey, 'Error acrualizando tarea');
           return;

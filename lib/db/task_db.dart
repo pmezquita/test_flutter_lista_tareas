@@ -7,8 +7,10 @@ const String columnId = '_id';
 const String columnTitulo = 'titulo';
 const String columnDescripcion = 'descripcion';
 const String columnFecha = 'fecha';
+const String columnFechaCompleted = 'fecha_completed';
 const String columnCompletada = 'completada';
 const String columnImagen = 'imagen';
+const String columnCreatedBy = 'created_by';
 
 const String createTableTask = '''
   create table $tableTask ( 
@@ -16,7 +18,9 @@ const String createTableTask = '''
     $columnTitulo text not null,
     $columnDescripcion text not null,
     $columnFecha text not null,
+    $columnFechaCompleted text,
     $columnImagen blob,
+    $columnCreatedBy integer not null,
     $columnCompletada integer not null)
 ''';
 
@@ -35,12 +39,13 @@ class TaskDb {
     return null;
   }
 
-  // TODO: que las task sean por usuario
-
-  static Future<List<Task>?> getTaskType(int completada) async {
+  static Future<List<Task>?> getTaskType(int completada, int? createdBy) async {
     final db = await DBProvider.db.database;
-    List<Map<String, dynamic>> maps =
-        await db.query(tableTask, where: '$columnCompletada = ?', whereArgs: [completada]);
+    List<Map<String, dynamic>> maps = await db.query(
+      tableTask,
+      where: '$columnCompletada = ? AND $columnCreatedBy = ?',
+      whereArgs: [completada, createdBy ?? 0],
+    );
     if (maps.isNotEmpty) {
       return Task.fromListMap(maps);
     }

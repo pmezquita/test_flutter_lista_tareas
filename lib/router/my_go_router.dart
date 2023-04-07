@@ -18,20 +18,20 @@ final myGoRouter = GoRouter(
       builder: (context, state) => const SinginPage(),
     ),
     GoRoute(
-      path: '/home',
+      path: '/home/:idUser',
       name: 'home',
-      builder: (context, state) => const HomePage(),
+      builder: (context, state) => HomePage(idUser: state.params['idUser']??'0'),
     ),
     GoRoute(
-      path: '/task',
+      path: '/task:idUser',
       name: 'taskView',
       builder: (context, state) {
         final tarea = state.extra as Task?;
 
         if (tarea == null) {
-          return const HomePage();
+          return const LoginPage();
         } else {
-          return TaskPage(tarea: tarea);
+          return TaskPage(tarea: tarea, idUser: state.params['idUser']?? '0');
         }
       },
     ),

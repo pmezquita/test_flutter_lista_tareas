@@ -30,17 +30,18 @@ class UserDb {
     return null;
   }
 
-  static Future<bool> isValid(String? username, String? password) async {
+  static Future<int> isValid(String? username, String? password) async {
     final db = await DBProvider.db.database;
     List<Map<String, dynamic>> maps = await db.query(
       tableUser,
+      columns: [columnId],
       where: '$columnUsername = ? AND $columnPassword = ?',
       whereArgs: [username ?? '', password ?? ''],
     );
     if (maps.isNotEmpty) {
-      return true;
+      return UserModel.fromMap(maps.first).id ?? 0;
     }
-    return false;
+    return 0;
   }
 
   static Future<bool> existByUsername(String? username) async {

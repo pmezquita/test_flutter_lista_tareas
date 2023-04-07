@@ -119,7 +119,8 @@ class LoginPage extends StatelessWidget {
       final context = formKey.currentContext!;
 
       // Verificar credenciales
-      if (!await UserDb.isValid(user.username, user.password)) {
+      final idUser = await UserDb.isValid(user.username, user.password);
+      if (idUser == 0) {
         showInSnackBar(scaffoldKey, 'Usuario y/o contraseña incorrecto');
         return;
       }
@@ -127,7 +128,7 @@ class LoginPage extends StatelessWidget {
       // Redireccionar a Home
       if (context.mounted) {
         BlocProvider.of<UserBloc>(context).add(SetUserEvent(user));
-        context.pushNamed('home');
+        context.pushNamed('home', params: {'idUser': idUser.toString()});
       }
     }
   }

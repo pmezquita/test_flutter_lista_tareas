@@ -59,7 +59,7 @@ class CardTask extends StatelessWidget {
                   const SizedBox(height: 10.0),
                 ],
               ),
-              onTap: () => context.pushNamed('taskView', extra: tarea)),
+              onTap: () => context.pushNamed('taskView', extra: tarea, params: {'idUser': tarea.createdBy.toString()})),
         ),
         onLongPress: () => _onDelete(context),
       ),
