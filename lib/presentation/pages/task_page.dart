@@ -24,8 +24,6 @@ class TaskPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final today = DateTime.now();
-    print(DateTime(today.year, today.month + 1, 0));
     final GlobalKey<FormState> formKey = GlobalKey<FormState>();
     final GlobalKey<ScaffoldMessengerState> scaffoldKey = GlobalKey<ScaffoldMessengerState>();
     return ScaffoldMessenger(
@@ -44,17 +42,19 @@ class TaskPage extends StatelessWidget {
                 children: <Widget>[
                   const SizedBox(height: 30.0),
                   BlocBuilder<TaskBloc, TaskState>(
-                    buildWhen: (previous, current) => !current.isLoadingPic,
+                    buildWhen: (previous, current) => previous.isLoadingPic != current.isLoadingPic,
                     builder: (context, state) => AvatarTask(img: tarea.img, radius: 70),
                   ),
                   const SizedBox(height: 10.0),
-                  InkWell(
-                    onTap: () => _onSelectPicture(context),
-                    child: Text(
-                      tarea.img == null ? 'Click para abrir galería' : 'Click para cambiar imagen',
-                      style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontSize: 12),
-                    ),
-                  ),
+                  tarea.isEditable
+                      ? InkWell(
+                          onTap: () => _onSelectPicture(context),
+                          child: Text(
+                            tarea.img == null ? 'Click para abrir galería' : 'Click para cambiar imagen',
+                            style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontSize: 12),
+                          ),
+                        )
+                      : const SizedBox.shrink(),
                   Padding(
                     padding: myPaddingForm,
                     child: Form(
@@ -117,16 +117,24 @@ class TaskPage extends StatelessWidget {
 
   Widget _rowFecha(Task tarea, BuildContext context) {
     final date = tarea.isNew ? DateTime.now() : tarea.fecha!;
-    // TODO: emitir estados para acualizar el ultimo día al seleccionar un mes o año diferente
+    BlocProvider.of<TaskBloc>(context).add(SetDateEvent(date));
+
     return Row(
       children: [
         Expanded(
-          child: DropdownButtonFormField<int>(
-            decoration: textFieldDecoration(enabled: tarea.isEditable),
-            isExpanded: true,
-            items: Task.getDropdownDia(date.year, date.month),
-            value: date.day,
-            onChanged: tarea.isEditable ? (value) => tarea.dia = value : null,
+          child: BlocBuilder<TaskBloc, TaskState>(
+            builder: (context, state) {
+              return DropdownButtonFormField<int>(
+                decoration: textFieldDecoration(enabled: tarea.isEditable),
+                isExpanded: true,
+                items: Task.getDropdownDia(state.date.year, state.date.month),
+                value: state.date.day,
+                onChanged: tarea.isEditable
+                    ? (value) => BlocProvider.of<TaskBloc>(context).add(SetDayDateEvent(value!))
+                    : null,
+                onSaved: (value) => tarea.dia = value,
+              );
+            },
           ),
         ),
         const SizedBox(width: 20.0),
@@ -136,7 +144,9 @@ class TaskPage extends StatelessWidget {
             isExpanded: true,
             items: Task.getDropdownMes(),
             value: date.month,
-            onChanged: tarea.isEditable ? (value) => tarea.mes = value : null,
+            onChanged:
+                tarea.isEditable ? (value) => BlocProvider.of<TaskBloc>(context).add(SetMonthDateEvent(value!)) : null,
+            onSaved: (value) => tarea.mes = value,
           ),
         ),
         const SizedBox(width: 20.0),
@@ -146,7 +156,9 @@ class TaskPage extends StatelessWidget {
             isExpanded: true,
             items: Task.getDropdownAnio(date.year),
             value: date.year,
-            onChanged: tarea.isEditable ? (value) => tarea.anio = value : null,
+            onChanged:
+                tarea.isEditable ? (value) => BlocProvider.of<TaskBloc>(context).add(SetYearDateEvent(value!)) : null,
+            onSaved: (value) => tarea.anio = value,
           ),
         ),
       ],

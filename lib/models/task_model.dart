@@ -120,7 +120,9 @@ class Task {
   }
 
   static List<DropdownMenuItem<int>> getDropdownAnio(int year) {
+    final currentYear = DateTime.now().year;
+    final initYear = year < DateTime.now().year ? year : currentYear;
     return List.generate(
-        50, (index) => DropdownMenuItem(value: year + index, child: Text((year + index).toString())));
+        50, (index) => DropdownMenuItem(value: initYear + index, child: Text((initYear + index).toString())));
   }
 }

@@ -8,3 +8,27 @@ class SetIsLoadingPicEvent extends TaskEvent {
 
   SetIsLoadingPicEvent(this.isLoadingPic);
 }
+
+class SetDateEvent extends TaskEvent {
+  final DateTime date;
+
+  SetDateEvent(this.date);
+}
+
+class SetDayDateEvent extends TaskEvent {
+  final int day;
+
+  SetDayDateEvent(this.day);
+}
+
+class SetMonthDateEvent extends TaskEvent {
+  final int month;
+
+  SetMonthDateEvent(this.month);
+}
+
+class SetYearDateEvent extends TaskEvent {
+  final int year;
+
+  SetYearDateEvent(this.year);
+}
