@@ -63,7 +63,7 @@ class LoginPage extends StatelessWidget {
               return null;
             },
             onSaved: (value) {
-              user.username = value;
+              user.username = value?.trim();
             },
           ),
           const SizedBox(height: 20),
