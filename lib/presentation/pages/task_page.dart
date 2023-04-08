@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lista_tareas/bloc/home/home_bloc.dart';
 import 'package:lista_tareas/bloc/task/task_bloc.dart';
@@ -254,7 +255,8 @@ class TaskPage extends StatelessWidget {
     final ImagePicker imagePicker = ImagePicker();
     final XFile? photo = await imagePicker.pickImage(source: ImageSource.gallery);
     if (photo != null) {
-      tarea.img = await photo.readAsBytes();
+      tarea.img = await FlutterImageCompress.compressWithList(await photo.readAsBytes(),
+          minWidth: 500, minHeight: 500);
     }
     if (context.mounted) {
       BlocProvider.of<TaskBloc>(context).add(SetIsLoadingPicEvent(false));
