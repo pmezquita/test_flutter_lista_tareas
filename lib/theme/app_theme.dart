@@ -90,6 +90,14 @@ class AppTheme {
             borderRadius: BorderRadius.all(Radius.circular(6.0)),
             borderSide: BorderSide(color: primary60),
           ),
+          focusedErrorBorder: const OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(6.0)),
+            borderSide: BorderSide(color: Colors.red),
+          ),
+          errorBorder: const OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(6.0)),
+            borderSide: BorderSide(color: Colors.red),
+          ),
           focusedBorder: const OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(6.0)),
             borderSide: BorderSide(color: secondary40),
